@@ -678,6 +678,16 @@ window.VH_I18N = {
       "Rooms in the house",
     "Fora do trabalho com dados, construo isto: uma casa escura que não é um lugar — é uma gravação a passar. Sem framework e sem motor de jogo, com uma API em Express sobre PostgreSQL por trás. É o projeto mais complexo que já construí, e o que me ensinou a desconfiar de mim.":
       "Outside my data work, I build this: a dark house that is not a place — it is a recording playing. No framework and no game engine, with an Express API over PostgreSQL behind it. <em>It is the most complex project I have built, and the one that taught me to distrust myself.</em>",
+
+    /* ---------- PHOSPHOR · fecho da página ---------- */
+    "A casa ainda não abriu.":
+      "The house has not opened yet.",
+    "Falar comigo":
+      "Talk to me",
+    "O PHOSPHOR continua em construção, e o final é a única parte que fica por escrever — de propósito. Quando abrir, vai correr no endereço dele, inteiro e sem explicação, que é como ele foi feito para ser encontrado.":
+      "PHOSPHOR is still being built, and the ending is the one part left unwritten — on purpose. When it opens, it will run at its own address, whole and without explanation, which is how it was made to be found.",
+    "Um item por execução":
+      "One item per run",
     "Entrar no PHOSPHOR":
       "Enter PHOSPHOR",
     "Ver a peça →":
@@ -1659,6 +1669,16 @@ window.VH_I18N = {
       "Habitaciones en la casa",
     "Fora do trabalho com dados, construo isto: uma casa escura que não é um lugar — é uma gravação a passar. Sem framework e sem motor de jogo, com uma API em Express sobre PostgreSQL por trás. É o projeto mais complexo que já construí, e o que me ensinou a desconfiar de mim.":
       "Fuera del trabajo con datos, construyo esto: una casa oscura que no es un lugar — es una grabación en marcha. Sin framework ni motor de juego, con una API en Express sobre PostgreSQL detrás. <em>Es el proyecto más complejo que he construido, y el que me enseñó a desconfiar de mí.</em>",
+
+    /* ---------- PHOSPHOR · fecho da página ---------- */
+    "A casa ainda não abriu.":
+      "La casa aún no ha abierto.",
+    "Falar comigo":
+      "Hablemos",
+    "O PHOSPHOR continua em construção, e o final é a única parte que fica por escrever — de propósito. Quando abrir, vai correr no endereço dele, inteiro e sem explicação, que é como ele foi feito para ser encontrado.":
+      "PHOSPHOR sigue en construcción, y el final es la única parte que queda sin escribir — a propósito. Cuando abra, correrá en su propia dirección, entero y sin explicación, que es como fue hecho para ser encontrado.",
+    "Um item por execução":
+      "Un ítem por ejecución",
     "Entrar no PHOSPHOR":
       "Entrar en PHOSPHOR",
     "Ver a peça →":
