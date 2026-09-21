@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab — Vitor Hugo Santana</title>
+<meta name="description" content="Snippets de SQL, Python e n8n usados em automação e análise de dados operacionais.">
+<meta name="author" content="Vitor Hugo Santana">
+<meta name="theme-color" content="#08100c">
+<link rel="canonical" href="https://vhsantos-data.github.io/lab.html">
+<meta property="og:title" content="Lab — Vitor Hugo Santana">
+<meta property="og:description" content="Padrões de SQL, Python e n8n que uso em produção.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vhsantos-data.github.io/lab.html">
+<meta property="og:image" content="https://vhsantos-data.github.io/assets/og.png">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/core.css">
+<link rel="stylesheet" href="/assets/css/fun.css">
+<script src="/assets/js/fun.js" defer></script>
+</head>
+<body data-email="vhsantosdata@gmail.com">
+
+<a href="#main" class="skip">Pular para o conteúdo</a>
+<div id="prog"></div>
+
+<header id="hd">
+  <div class="wrap navbar">
+    <a href="index.html" class="brand">VITOR<span>.</span>HUGO</a>
+    <nav class="navlinks" id="nav">
+      <a href="index.html">Home</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="projetos.html">Projetos</a>
+      <a href="lab.html">Lab</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+    <button class="kbd-hint" data-cmdk-open type="button" aria-label="Abrir navegação rápida">
+      <kbd>Ctrl</kbd><kbd>K</kbd>
+    </button>
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <i></i><i></i><i></i>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-head">
+    <div class="wrap">
+      <div class="eyebrow rv">Código</div>
+      <h1 class="rv" data-d="1">Lab</h1>
+      <p class="lead rv" data-d="2">
+        Padrões que uso em produção — não exemplos de tutorial.
+        SQL para métricas operacionais, Python para tratamento dentro do n8n
+        e a estrutura de workflow que sustenta o resto.
+        <em>Pode copiar.</em>
+      </p>
+    </div>
+  </section>
+
+  <section style="padding-top:60px">
+    <div class="wrap">
+
+      <div class="tabs rv" data-tabs role="tablist" aria-label="Linguagens">
+        <button class="tab on" type="button" aria-selected="true">SQL</button>
+        <button class="tab" type="button" aria-selected="false">Python</button>
+        <button class="tab" type="button" aria-selected="false">n8n</button>
+        <button class="tab" type="button" aria-selected="false">Sheets</button>
+      </div>
+
+      <!-- ===== PANEL SQL ===== -->
+      <div class="panel on rv" data-d="1">
+        <div class="panel-head">
+          <span class="panel-file">falhas_por_area_com_variacao.sql</span>
+          <button class="copybtn" type="button">Copiar</button>
+        </div>
+<pre><code><span class="c-com">-- Volume de falhas por área e semana, com variação vs. semana anterior.</span>
+<span class="c-com">-- Usa LAG para comparar sem self-join.</span>
+
+<span class="c-key">WITH</span> base <span class="c-key">AS</span> (
+  <span class="c-key">SELECT</span>
+    area,
+    <span class="c-fn">DATE_TRUNC</span>(data_falha, <span class="c-key">WEEK</span>(MONDAY)) <span class="c-key">AS</span> semana,
+    <span class="c-fn">COUNT</span>(*) <span class="c-key">AS</span> total
+  <span class="c-key">FROM</span> operacao.falhas
+  <span class="c-key">WHERE</span> data_falha &gt;= <span class="c-fn">DATE_SUB</span>(<span class="c-fn">CURRENT_DATE</span>(), <span class="c-key">INTERVAL</span> <span class="c-num">90</span> <span class="c-key">DAY</span>)
+    <span class="c-key">AND</span> status_registro = <span class="c-str">'valido'</span>
+  <span class="c-key">GROUP BY</span> area, semana
+),
+
+comparativo <span class="c-key">AS</span> (
+  <span class="c-key">SELECT</span>
+    area,
+    semana,
+    total,
+    <span class="c-fn">LAG</span>(total) <span class="c-key">OVER</span> (<span class="c-key">PARTITION BY</span> area <span class="c-key">ORDER BY</span> semana) <span class="c-key">AS</span> total_anterior
+  <span class="c-key">FROM</span> base
+)
+
+<span class="c-key">SELECT</span>
+  area,
+  semana,
+  total,
+  total_anterior,
+  total - total_anterior <span class="c-key">AS</span> delta,
+  <span class="c-key">CASE</span>
+    <span class="c-key">WHEN</span> total_anterior <span class="c-key">IS NULL</span>  <span class="c-key">THEN</span> <span class="c-str">'sem base'</span>
+    <span class="c-key">WHEN</span> total_anterior = <span class="c-num">0</span>       <span class="c-key">THEN</span> <span class="c-str">'novo'</span>
+    <span class="c-key">ELSE</span> <span class="c-fn">FORMAT</span>(<span class="c-str">'%.1f%%'</span>, <span class="c-fn">SAFE_DIVIDE</span>(total - total_anterior, total_anterior) * <span class="c-num">100</span>)
+  <span class="c-key">END</span> <span class="c-key">AS</span> variacao
+<span class="c-key">FROM</span> comparativo
+<span class="c-key">ORDER BY</span> area, semana <span class="c-key">DESC</span>;</code></pre>
+      </div>
+
+      <!-- ===== PANEL PYTHON ===== -->
+      <div class="panel rv" data-d="1">
+        <div class="panel-head">
+          <span class="panel-file">filtrar_nao_processados.py</span>
+          <button class="copybtn" type="button">Copiar</button>
+        </div>
+<pre><code><span class="c-com"># Nó de código no n8n — modo "Run Once for All Items".</span>
+<span class="c-com"># Entrada 0: registros da fonte. Entrada 1: IDs já processados.</span>
+<span class="c-com"># Devolve UM item não processado por execução (idempotência).</span>
+
+registros = _input.all(input_index=<span class="c-num">0</span>)
+processados = _input.all(input_index=<span class="c-num">1</span>)
+
+<span class="c-com"># conjunto de IDs já tratados — lookup O(1)</span>
+ids_feitos = <span class="c-fn">set</span>()
+<span class="c-key">for</span> p <span class="c-key">in</span> processados:
+    valor = p.json.get(<span class="c-str">"id_registro"</span>)
+    <span class="c-key">if</span> valor:
+        ids_feitos.add(<span class="c-fn">str</span>(valor).strip())
+
+<span class="c-com"># primeiro registro válido e ainda não processado</span>
+<span class="c-key">for</span> r <span class="c-key">in</span> registros:
+    dados = r.json
+    rid = <span class="c-fn">str</span>(dados.get(<span class="c-str">"id_registro"</span>, <span class="c-str">""</span>)).strip()
+
+    <span class="c-key">if</span> <span class="c-key">not</span> rid:
+        <span class="c-key">continue</span>
+    <span class="c-key">if</span> rid <span class="c-key">in</span> ids_feitos:
+        <span class="c-key">continue</span>
+    <span class="c-key">if</span> <span class="c-key">not</span> dados.get(<span class="c-str">"categoria"</span>):
+        <span class="c-key">continue</span>
+
+    <span class="c-key">return</span> dados
+
+<span class="c-com"># nada pendente — sinaliza para o nó IF encerrar a rodada</span>
+<span class="c-key">return</span> {<span class="c-str">"id_registro"</span>: <span class="c-str">""</span>, <span class="c-str">"vazio"</span>: <span class="c-key">True</span>}</code></pre>
+      </div>
+
+      <!-- ===== PANEL N8N ===== -->
+      <div class="panel rv" data-d="1">
+        <div class="panel-head">
+          <span class="panel-file">estrutura-workflow.txt</span>
+          <button class="copybtn" type="button">Copiar</button>
+        </div>
+<pre><code><span class="c-com">// Estrutura do fluxo de relatório recorrente.</span>
+<span class="c-com">// Regra: uma execução processa um registro do início ao fim.</span>
+
+[Schedule Trigger]
+      |
+      +--&gt; [Ler registros da fonte] ------+
+      |                                    |
+      +--&gt; [Ler IDs processados] ---------+
+                                           |
+                                           v
+                          [Code: filtrar_nao_processados]
+                                           |
+                                           v
+                                    [IF vazio?]
+                                     /        \
+                                 true          false
+                                   |             |
+                              [No Operation]     v
+                                            [Parser de campos]
+                                                  |
+                                                  v
+                                          [Calcular métricas]
+                                                  |
+                                                  v
+                                        [Gravar na base]
+                                                  |
+                                                  v
+[Registrar ID processado]
+                                                  |
+                                                  v
+                                       [Slack: enviar DM]
+                                                  |
+                                                  v
+                                       [Atualizar métricas]
+
+<span class="c-com">// Pontos de atenção que aprendi na prática:</span>
+<span class="c-com">//</span>
+<span class="c-com">// 1. "Registrar ID" vem DEPOIS de gravar, nunca antes.</span>
+<span class="c-com">//    Se inverter e a gravação falhar, o registro fica</span>
+<span class="c-com">//    marcado como processado sem ter entrado na base.</span>
+<span class="c-com">//</span>
+<span class="c-com">// 2. O IF precisa tratar o caso vazio explicitamente.</span>
+<span class="c-com">//    Sem isso o fluxo tenta processar objeto sem campo</span>
+<span class="c-com">//    e falha com erro que não diz nada.</span>
+<span class="c-com">//</span>
+<span class="c-com">// 3. Schedule curto + um item por execução é mais estável</span>
+<span class="c-com">//    que schedule longo + lote grande. Falha isolada não</span>
+<span class="c-com">//    derruba a rodada inteira.</span>
+<span class="c-com">//</span>
+<span class="c-com">// 4. Log estruturado em cada etapa crítica. Quando quebra</span>
+<span class="c-com">//    às 3h da manhã, o log é a única coisa que existe.</span></code></pre>
+      </div>
+
+      <!-- ===== PANEL SHEETS ===== -->
+      <div class="panel rv" data-d="1">
+        <div class="panel-head">
+          <span class="panel-file">formulas-uteis.txt</span>
+          <button class="copybtn" type="button">Copiar</button>
+        </div>
+<pre><code><span class="c-com">// Fórmulas que resolvem 80% do trabalho em base operacional.</span>
+
+<span class="c-com">// 1. Contagem por categoria com período móvel</span>
+=<span class="c-fn">COUNTIFS</span>(
+    Registros!$C:$C; $A2;
+    Registros!$A:$A; <span class="c-str">"&gt;="</span> & <span class="c-fn">EOMONTH</span>(<span class="c-fn">TODAY</span>(); -<span class="c-num">1</span>) + <span class="c-num">1</span>;
+    Registros!$E:$E; <span class="c-str">"valido"</span>
+)
+
+<span class="c-com">// 2. Consolidar múltiplas abas sem copiar e colar</span>
+=<span class="c-fn">QUERY</span>(
+    {Area_A!A2:F; Area_B!A2:F; Area_C!A2:F; Area_D!A2:F};
+    <span class="c-str">"select Col1, Col3, count(Col1)
+     where Col1 is not null
+     group by Col1, Col3
+     order by count(Col1) desc
+     label count(Col1) 'total'"</span>;
+    <span class="c-num">0</span>
+)
+
+<span class="c-com">// 3. Semana ISO — evita divergência de contagem entre relatórios</span>
+=<span class="c-fn">ISOWEEKNUM</span>($A2) & <span class="c-str">"/"</span> & <span class="c-fn">YEAR</span>($A2)
+
+<span class="c-com">// 4. Detectar duplicidade antes que ela vire métrica errada</span>
+=<span class="c-fn">IF</span>(<span class="c-fn">COUNTIF</span>($B$2:$B2; $B2) &gt; <span class="c-num">1</span>; <span class="c-str">"DUPLICADO"</span>; <span class="c-str">""</span>)
+
+<span class="c-com">// 5. Variação percentual protegida contra divisão por zero</span>
+=<span class="c-fn">IFERROR</span>(
+    <span class="c-fn">TEXT</span>((C2 - B2) / B2; <span class="c-str">"0.0%"</span>);
+    <span class="c-fn">IF</span>(C2 &gt; <span class="c-num">0</span>; <span class="c-str">"novo"</span>; <span class="c-str">"—"</span>)
+)
+
+<span class="c-com">// 6. Ranking de concentração (regra de Pareto na operação)</span>
+=<span class="c-fn">ARRAYFORMULA</span>(
+    <span class="c-fn">IF</span>(B2:B &lt;&gt; <span class="c-str">""</span>;
+       <span class="c-fn">ROUND</span>(<span class="c-fn">SUMIF</span>(<span class="c-fn">ROW</span>(B2:B); <span class="c-str">"&lt;="</span> & <span class="c-fn">ROW</span>(B2:B); B2:B) / <span class="c-fn">SUM</span>(B2:B) * <span class="c-num">100</span>; <span class="c-num">1</span>);
+       <span class="c-str">""</span>)
+)</code></pre>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ PRINCÍPIOS ============ -->
+  <section style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="eyebrow rv">Princípios</div>
+      <h2 class="rv" data-d="1">Regras que sigo<br>ao escrever automação.</h2>
+
+      <div class="grid-3 rv" data-d="2" style="margin-top:44px">
+        <div class="card">
+          <span class="tag mute">01</span>
+          <h3 style="margin-top:14px">Idempotência primeiro</h3>
+          <p>
+            Todo fluxo que grava precisa poder rodar duas vezes sem duplicar.
+            Sem isso, a primeira reexecução destrói a confiança na métrica.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag mute">02</span>
+          <h3 style="margin-top:14px">Falhar alto e claro</h3>
+          <p>
+            Erro silencioso é pior que fluxo parado. Registro inválido fica marcado
+            e visível, nunca descartado sem rastro.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag mute">03</span>
+          <h3 style="margin-top:14px">Um item por execução</h3>
+          <p>
+            Lote grande é tentador e frágil. Processar unitário custa tempo e
+            devolve previsibilidade.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag mute">04</span>
+          <h3 style="margin-top:14px">Categoria fechada</h3>
+          <p>
+            Texto livre em campo de classificação inviabiliza agrupamento.
+            Se o dado precisa virar número, a entrada precisa ser controlada.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag mute">05</span>
+          <h3 style="margin-top:14px">Entregar onde a pessoa está</h3>
+          <p>
+            Relatório no Slack vence dashboard em link. A melhor visualização
+            é a que aparece sem ser procurada.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag mute">06</span>
+          <h3 style="margin-top:14px">Log é infraestrutura</h3>
+          <p>
+            Quando o fluxo quebra fora do horário, o log é a única coisa
+            disponível. Escrever log é parte da feature, não extra.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section style="text-align:center;border-top:1px solid var(--line)">
+    <div class="wrap">
+      <h2 class="rv">Mais código no GitHub.</h2>
+      <p class="lead rv" data-d="1" style="margin:18px auto 0;text-align:left">
+        Os repositórios de SQL e dashboards têm mais exemplos,
+        com contexto de uso e resultado.
+      </p>
+      <div class="cta-row rv" data-d="2" style="justify-content:center;margin-top:30px">
+        <a class="btn" href="https://github.com/vhsantos-data" target="_blank" rel="noopener"><span>Ver GitHub</span></a>
+        <a class="btn ghost" href="cases/falhas-operacionais.html"><span>Ver o case</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <p>&copy; <span data-year>2026</span> Vitor Hugo Santana</p>
+      <p class="stat" style="margin-top:12px">
+        <span class="dot on"></span> Sistemas operando — 24/7
+      </p>
+    </div>
+    <nav class="foot-nav">
+      <a href="index.html">Home</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="projetos.html">Projetos</a>
+      <a href="lab.html">Lab</a>
+      <a href="contato.html">Contato</a>
+      <a href="https://github.com/vhsantos-data" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/vhsantos-data" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- COMMAND PALETTE -->
+<div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Navegação rápida">
+  <div class="cmdk-box">
+    <input type="text" placeholder="Buscar página ou ação..." aria-label="Buscar">
+    <ul></ul>
+    <div class="cmdk-foot">
+      <span>↑↓ navegar</span><span>↵ abrir</span><span>esc fechar</span>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/i18n-dict.js" defer></script>
+<script src="assets/js/i18n.js" defer></script>
+<script src="assets/js/core.js" defer></script>
+<link rel="stylesheet" href="assets/css/core.css">
+<link rel="stylesheet" href="assets/css/fun.css">
+</body>
+</html>

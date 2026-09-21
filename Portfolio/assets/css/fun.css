@@ -1,0 +1,183 @@
+/* ============================================================
+   FUN.CSS — modos visuais alternativos
+   Ativados via Ctrl+K. Estado salvo em localStorage.
+   ============================================================ */
+
+/* ---------- TEMA: ÂMBAR (terminal antigo) ---------- */
+body.t-amber{
+  --bg:#120c04;--void:#0a0702;--bg-raised:#1b1206;--bg-card:#1d1407;
+  --line:#3a2a10;--line-strong:#553f18;
+  --fg:#f5d9a0;--fg-dim:#c9a86a;--fg-ghost:#8a7344;
+  --accent:#ffb000;--accent-dim:#4a3210;--accent-haze:rgba(255,176,0,.10);
+}
+
+/* ---------- TEMA: AZUL FRIO ---------- */
+body.t-ice{
+  --bg:#060b14;--void:#03060d;--bg-raised:#0b1422;--bg-card:#0d1728;
+  --line:#1b2c44;--line-strong:#2a4468;
+  --fg:#d6e4f7;--fg-dim:#8fa6c4;--fg-ghost:#5c7391;
+  --accent:#4da6ff;--accent-dim:#153455;--accent-haze:rgba(77,166,255,.10);
+}
+
+/* ---------- TEMA: MAGENTA (vaporwave) ---------- */
+body.t-vapor{
+  --bg:#12061a;--void:#0a0310;--bg-raised:#1c0c28;--bg-card:#1f0e2d;
+  --line:#3a1a4e;--line-strong:#5a2a76;
+  --fg:#f2d9ff;--fg-dim:#c49ae0;--fg-ghost:#8f6ba8;
+  --accent:#ff4dd2;--accent-dim:#4d1540;--accent-haze:rgba(255,77,210,.12);
+}
+
+/* ---------- TEMA: PAPEL (claro) ---------- */
+body.t-paper{
+  --bg:#f4f1ea;--void:#e8e3d8;--bg-raised:#ebe7dd;--bg-card:#fbf9f4;
+  --line:#d8d2c4;--line-strong:#bfb6a3;
+  --fg:#1d1a14;--fg-dim:#5a5348;--fg-ghost:#8a8274;
+  --accent:#0f7a4a;--accent-dim:#c3e0d0;--accent-haze:rgba(15,122,74,.07);
+}
+body.t-paper::before{opacity:.12;mix-blend-mode:multiply}
+body.t-paper::after{opacity:.5}
+body.t-paper .dot.on{box-shadow:none}
+body.t-paper #stats,
+body.t-paper .funchip{background:rgba(251,249,244,.92)}
+
+/* ---------- MODO CRT INTENSO ---------- */
+body.crt::before{opacity:.95;animation:crtRoll 8s linear infinite}
+@keyframes crtRoll{to{background-position:0 300px}}
+body.crt{text-shadow:0 0 3px var(--accent-haze),0 0 12px rgba(0,0,0,.4)}
+body.crt main{animation:crtFlicker 5s ease-in-out infinite}
+@keyframes crtFlicker{
+  0%,96%,100%{opacity:1}
+  97%{opacity:.88}
+  98%{opacity:1}
+  99%{opacity:.93}
+}
+body.crt::after{
+  background:
+    radial-gradient(ellipse at 50% 50%,transparent 55%,rgba(0,0,0,.55) 100%),
+    radial-gradient(ellipse at 50% 0%,var(--accent-haze),transparent 60%);
+}
+
+/* ---------- MODO INVERTIDO ---------- */
+body.invert{filter:invert(1) hue-rotate(180deg)}
+body.invert img,body.invert svg{filter:invert(1) hue-rotate(180deg)}
+
+/* ---------- MODO ZEN (foco na leitura) ---------- */
+body.zen::before,body.zen::after{display:none}
+body.zen .langbar,body.zen .kbd-hint,body.zen #prog{display:none}
+body.zen header{background:transparent;border-bottom-color:transparent}
+body.zen .terminal,body.zen .flow,body.zen .metrics{opacity:.35;transition:opacity var(--t-mid)}
+body.zen .terminal:hover,body.zen .flow:hover,body.zen .metrics:hover{opacity:1}
+body.zen .prose,body.zen .lead{font-size:19px;line-height:1.9}
+body.zen section{padding:120px 0}
+
+/* ---------- MODO GLITCH ---------- */
+body.glitch h1,body.glitch h2{position:relative;animation:glText 3.4s steps(1) infinite}
+@keyframes glText{
+  0%,88%,100%{transform:none;clip-path:none}
+  89%{transform:translateX(-3px) skewX(-1deg)}
+  91%{transform:translateX(4px);clip-path:inset(18% 0 52% 0)}
+  93%{transform:translateX(-2px);clip-path:inset(62% 0 14% 0)}
+  95%{transform:none;clip-path:none}
+}
+body.glitch .brand{animation:glShift 2.2s steps(1) infinite}
+@keyframes glShift{
+  0%,92%,100%{text-shadow:none}
+  93%{text-shadow:-2px 0 #ff0044,2px 0 #00e5ff}
+  95%{text-shadow:2px 0 #ff0044,-2px 0 #00e5ff}
+}
+body.glitch::before{animation:glScan 2.6s linear infinite}
+@keyframes glScan{
+  0%,80%{opacity:.5}
+  85%{opacity:.9;transform:translateY(3px)}
+  90%{opacity:.4;transform:translateY(-2px)}
+  100%{opacity:.5;transform:none}
+}
+
+/* ---------- MODO WIREFRAME (raio-x do layout) ---------- */
+body.wire *{
+  outline:1px solid rgba(0,255,136,.22)!important;
+  outline-offset:-1px;
+}
+body.wire section{outline-color:rgba(255,77,210,.4)!important}
+body.wire .card,body.wire .proj,body.wire .step{outline-color:rgba(255,176,0,.45)!important}
+body.wire::before{opacity:.15}
+
+/* ---------- MODO SEM GRAVIDADE ---------- */
+body.float .card,body.float .metric,body.float .chip,body.float .tag{
+  animation:bob 4.5s ease-in-out infinite;
+}
+body.float .card:nth-child(2n){animation-delay:-1.2s}
+body.float .card:nth-child(3n){animation-delay:-2.4s}
+body.float .metric:nth-child(2n){animation-delay:-.8s}
+@keyframes bob{
+  0%,100%{transform:translateY(0) rotate(0)}
+  50%{transform:translateY(-9px) rotate(-.4deg)}
+}
+
+/* ---------- MATRIX RAIN (canvas) ---------- */
+#matrix{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  opacity:0;transition:opacity 700ms ease;
+}
+#matrix.on{opacity:.30}
+body.t-paper #matrix.on{opacity:.16}
+
+body header,body main,body footer{position:relative;z-index:1}
+
+/* ---------- CURSOR TRAIL ---------- */
+.trail-dot{
+  position:fixed;width:5px;height:5px;border-radius:50%;
+  background:var(--accent);pointer-events:none;z-index:9994;
+  opacity:.85;transition:opacity 600ms linear,transform 600ms linear;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+/* ---------- STATS OVERLAY ---------- */
+#stats{
+  position:fixed;bottom:16px;left:16px;z-index:9993;
+  border:1px solid var(--line-strong);background:rgba(8,16,12,.92);
+  backdrop-filter:blur(8px);
+  padding:12px 14px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.06em;color:var(--fg-dim);line-height:1.9;
+  display:none;min-width:168px;
+}
+#stats.on{display:block}
+#stats b{color:var(--accent);font-weight:500;font-variant-numeric:tabular-nums}
+#stats .st-row{display:flex;justify-content:space-between;gap:14px}
+
+/* ---------- FUN BAR (indicador de modos ativos) ---------- */
+#funbar{
+  position:fixed;bottom:16px;right:16px;z-index:9993;
+  display:none;gap:7px;flex-wrap:wrap;max-width:280px;justify-content:flex-end;
+}
+#funbar.on{display:flex}
+.funchip{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--accent);color:var(--accent);background:rgba(8,16,12,.9);
+  padding:5px 9px;cursor:pointer;backdrop-filter:blur(6px);
+  transition:background var(--t-fast),color var(--t-fast);
+}
+.funchip:hover{background:var(--accent);color:var(--void)}
+.funchip::after{content:' ×';opacity:.6}
+
+/* ---------- CMDK: grupos e badges ---------- */
+.cmdk li .ci-kind.fun{color:var(--accent);opacity:.75}
+.cmdk li[data-active="1"] .ci-name::after{
+  content:' ●';color:var(--accent);font-size:9px;vertical-align:2px;
+}
+.cmdk-group{
+  padding:9px 20px 6px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--fg-ghost);border-bottom:1px solid var(--line);
+  background:var(--bg);position:sticky;top:0;
+}
+
+/* ---------- ACESSIBILIDADE ---------- */
+@media (prefers-reduced-motion:reduce){
+  body.crt main,body.crt::before,body.glitch h1,body.glitch h2,
+  body.glitch .brand,body.glitch::before,body.float .card,
+  body.float .metric,body.float .chip,body.float .tag{animation:none!important}
+  body.float .card,body.float .metric,
+  body.float .chip,body.float .tag{transform:none!important}
+  #matrix{display:none}
+  .trail-dot{display:none}
+}

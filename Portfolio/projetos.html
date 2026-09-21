@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projetos — Vitor Hugo Santana</title>
+<meta name="description" content="Projetos de automação, análise de dados e desenvolvimento. n8n, Python, SQL, BigQuery, Looker Studio, PHP e MySQL.">
+<meta name="author" content="Vitor Hugo Santana">
+<meta name="theme-color" content="#08100c">
+<link rel="canonical" href="https://vhsantos-data.github.io/projetos.html">
+<meta property="og:title" content="Projetos — Vitor Hugo Santana">
+<meta property="og:description" content="Sistemas de automação, queries de análise e dashboards operacionais.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vhsantos-data.github.io/projetos.html">
+<meta property="og:image" content="https://vhsantos-data.github.io/assets/og.png">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/core.css">
+<link rel="stylesheet" href="/assets/css/fun.css">
+ <script src="/assets/js/fun.js" defer></script>
+</head>
+<body data-email="vhsantosdata@gmail.com">
+
+<a href="#main" class="skip">Pular para o conteúdo</a>
+<div id="prog"></div>
+
+<header id="hd">
+  <div class="wrap navbar">
+    <a href="index.html" class="brand">VITOR<span>.</span>HUGO</a>
+    <nav class="navlinks" id="nav">
+      <a href="index.html">Home</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="projetos.html">Projetos</a>
+      <a href="lab.html">Lab</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+    <button class="kbd-hint" data-cmdk-open type="button" aria-label="Abrir navegação rápida">
+      <kbd>Ctrl</kbd><kbd>K</kbd>
+    </button>
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <i></i><i></i><i></i>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ CABEÇALHO ============ -->
+  <section class="page-head">
+    <div class="wrap">
+      <div class="eyebrow rv">Portfolio</div>
+      <h1 class="rv" data-d="1">Projetos</h1>
+      <p class="lead rv" data-d="2">
+        Sistemas em produção, experimentos e trabalhos acadêmicos.
+        Cada um resolveu um problema concreto — <em>nenhum foi feito
+        só para ocupar espaço no repositório.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ LISTA + FILTROS ============ -->
+  <section style="padding-top:60px">
+    <div class="wrap">
+
+      <div class="eyebrow rv">Filtrar por stack</div>
+
+      <div class="filterbar rv" id="filterbar" data-d="1" role="group" aria-label="Filtrar projetos por tecnologia">
+        <button class="fbtn on" data-filter="all" type="button">Todos</button>
+        <button class="fbtn" data-filter="n8n" type="button">n8n</button>
+        <button class="fbtn" data-filter="python" type="button">Python</button>
+        <button class="fbtn" data-filter="sql" type="button">SQL</button>
+        <button class="fbtn" data-filter="bigquery" type="button">BigQuery</button>
+        <button class="fbtn" data-filter="looker" type="button">Looker</button>
+        <button class="fbtn" data-filter="slack" type="button">Slack API</button>
+        <button class="fbtn" data-filter="php" type="button">PHP</button>
+        <button class="fbtn" data-filter="mysql" type="button">MySQL</button>
+        <button class="fbtn" data-filter="frontend" type="button">Frontend</button>
+      </div>
+
+      <div class="fcount rv" data-d="1" id="fcount" aria-live="polite">6 projetos</div>
+
+      <div class="proj-list rv" data-d="2">
+
+        <!-- 001 -->
+        <a class="proj" data-stack="n8n python slack looker sql sheets automacao"
+           href="cases/falhas-operacionais.html">
+          <div class="proj-idx">001</div>
+          <div>
+            <div class="proj-title">operational-failure-management</div>
+            <span class="tag" style="margin-top:10px">Case study</span>
+          </div>
+          <div>
+            <p class="proj-desc">
+              Sistema de automação end-to-end para rastreamento de falhas
+              operacionais no Mercado Livre. Registro via formulário no Slack,
+              relatórios diário, semanal e mensal enviados por DM, e dashboards
+              interativos — 4 áreas, 15 Team Leaders, rodando 24/7.
+            </p>
+            <div class="proj-stack">
+              <i>n8n</i><i>Python</i><i>Slack API</i><i>Google Sheets</i><i>Looker Studio</i><i>SQL</i>
+            </div>
+          </div>
+          <div class="proj-link">Ver case →</div>
+        </a>
+
+        <!-- 002 -->
+        <a class="proj" data-stack="n8n python sql automacao slack"
+           href="https://github.com/vhsantos-data/Automation" target="_blank" rel="noopener">
+          <div class="proj-idx">002</div>
+          <div>
+            <div class="proj-title">Automation</div>
+            <span class="tag mute" style="margin-top:10px">Workflows</span>
+          </div>
+          <div>
+            <p class="proj-desc">
+              Repositório de workflows e experimentos em n8n: integrações via
+              REST API, tratamento de dados, rotinas agendadas e nós de código
+              em Python para transformações que os nós nativos não cobrem.
+            </p>
+            <div class="proj-stack">
+              <i>n8n</i><i>REST APIs</i><i>Python</i><i>Webhooks</i>
+            </div>
+          </div>
+          <div class="proj-link">Ver repo →</div>
+        </a>
+
+        <!-- 003 -->
+        <a class="proj" data-stack="sql bigquery dados"
+           href="https://github.com/vhsantos-data/sql-analytics-portfolio" target="_blank" rel="noopener">
+          <div class="proj-idx">003</div>
+          <div>
+            <div class="proj-title">sql-analytics-portfolio</div>
+            <span class="tag mute" style="margin-top:10px">Análise</span>
+          </div>
+          <div>
+            <p class="proj-desc">
+              Coleção de queries para análise de dados: construção de KPIs,
+              acompanhamento de variação entre períodos, janelas móveis e
+              detecção de padrões fora do esperado em bases operacionais.
+            </p>
+            <div class="proj-stack">
+              <i>SQL</i><i>BigQuery</i><i>Window Functions</i>
+            </div>
+          </div>
+          <div class="proj-link">Ver repo →</div>
+        </a>
+
+        <!-- 004 -->
+        <a class="proj" data-stack="looker sheets dados visualizacao"
+           href="https://github.com/vhsantos-data/dashboards-portfolio" target="_blank" rel="noopener">
+          <div class="proj-idx">004</div>
+          <div>
+            <div class="proj-title">dashboards-portfolio</div>
+            <span class="tag mute" style="margin-top:10px">Visualização</span>
+          </div>
+          <div>
+            <p class="proj-desc">
+              Designs de dashboards e projetos de visualização voltados a
+              monitoramento operacional: leitura em poucos segundos, filtros
+              por área e período, e hierarquia visual que prioriza o desvio.
+            </p>
+            <div class="proj-stack">
+              <i>Looker Studio</i><i>Google Sheets</i><i>Data Modeling</i>
+            </div>
+          </div>
+          <div class="proj-link">Ver repo →</div>
+        </a>
+
+        <!-- 005 -->
+        <a class="proj" data-stack="php mysql frontend html css javascript bootstrap"
+           href="https://github.com/vhsantos-data" target="_blank" rel="noopener">
+          <div class="proj-idx">005</div>
+          <div>
+            <div class="proj-title">auster-restaurant-booking</div>
+            <span class="tag mute" style="margin-top:10px">TCC — FITO</span>
+          </div>
+          <div>
+            <p class="proj-desc">
+              Plataforma de reservas para restaurantes voltada ao mercado premium
+              da América Latina. Fluxo completo de reserva, gestão de mesas,
+              área administrativa e autenticação — frontend próprio e backend
+              em PHP com MySQL.
+            </p>
+            <div class="proj-stack">
+              <i>HTML</i><i>CSS</i><i>JavaScript</i><i>PHP</i><i>MySQL</i><i>Bootstrap</i>
+            </div>
+          </div>
+          <div class="proj-link">Ver repo →</div>
+        </a>
+
+        <!-- 006 -->
+        <a class="proj" data-stack="frontend html css javascript"
+           href="https://github.com/vhsantos-data/vhsantos-data" target="_blank" rel="noopener">
+          <div class="proj-idx">006</div>
+          <div>
+            <div class="proj-title">vhsantos-data</div>
+            <span class="tag mute" style="margin-top:10px">Perfil</span>
+          </div>
+          <div>
+            <p class="proj-desc">
+              Repositório de perfil do GitHub com apresentação, stack e índice
+              dos projetos. Ponto de entrada para quem chega pelo LinkedIn.
+            </p>
+            <div class="proj-stack">
+              <i>Markdown</i><i>HTML</i>
+            </div>
+          </div>
+          <div class="proj-link">Ver repo →</div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMO EU TRABALHO ============ -->
+  <section style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="eyebrow rv">Método</div>
+      <h2 class="rv" data-d="1">Como eu chego no resultado.</h2>
+
+      <div class="steps rv" data-d="2" style="margin-top:40px">
+        <div class="step">
+          <div>
+            <h3>Entender o processo manual</h3>
+            <p>
+              Antes de escrever qualquer linha, acompanho como o trabalho é feito hoje.
+              Onde o dado nasce, quem copia para onde, e qual etapa gera retrabalho.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Mapear a fonte de verdade</h3>
+            <p>
+              Se existem três planilhas com números diferentes, o problema não é
+              automação — é definição. Só automatizo depois que existe uma base única.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Automatizar o caminho mais curto</h3>
+            <p>
+              Começo pelo fluxo que remove mais trabalho manual com menos peças.
+              Um relatório que chega sozinho já muda a rotina — e prova o valor
+              antes de investir em dashboard.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Entregar onde a pessoa já está</h3>
+            <p>
+              Relatório dentro do Slack, não em link que ninguém abre. A automação
+              só funciona se ela chega no lugar onde a decisão acontece.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Monitorar e ajustar</h3>
+            <p>
+              Fluxo em produção quebra: API muda, aba é renomeada, alguém preenche
+              errado. Trato falha como parte do sistema, com validação e registro
+              do que não passou.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="quote">
+    <div class="wrap">
+      <blockquote class="rv">
+        Automação boa é a que ninguém lembra que existe<br>
+        até o dia em que ela para.
+      </blockquote>
+      <cite class="rv" data-d="1">Vitor Hugo Santana</cite>
+    </div>
+  </section>
+
+  <section style="text-align:center">
+    <div class="wrap">
+      <h2 class="rv">Tem um processo que deveria rodar sozinho?</h2>
+      <div class="cta-row rv" data-d="1" style="justify-content:center;margin-top:28px">
+        <a class="btn" href="contato.html"><span>Vamos conversar</span></a>
+        <a class="btn ghost" href="lab.html"><span>Ver código no Lab</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <p>&copy; <span data-year>2026</span> Vitor Hugo Santana</p>
+      <p class="stat" style="margin-top:12px">
+        <span class="dot on"></span> Sistemas operando — 24/7
+      </p>
+    </div>
+    <nav class="foot-nav">
+      <a href="index.html">Home</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="projetos.html">Projetos</a>
+      <a href="lab.html">Lab</a>
+      <a href="contato.html">Contato</a>
+      <a href="https://github.com/vhsantos-data" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/vhsantos-data" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- COMMAND PALETTE -->
+<div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Navegação rápida">
+  <div class="cmdk-box">
+    <input type="text" placeholder="Buscar página ou ação..." aria-label="Buscar">
+    <ul></ul>
+    <div class="cmdk-foot">
+      <span>↑↓ navegar</span><span>↵ abrir</span><span>esc fechar</span>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/i18n-dict.js" defer></script>
+<script src="assets/js/i18n.js" defer></script>
+<script src="assets/js/core.js" defer></script>
+<link rel="stylesheet" href="assets/css/core.css">
+<link rel="stylesheet" href="assets/css/fun.css">
+</body>
+</html>

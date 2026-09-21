@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gestão de falhas operacionais — Case study | Vitor Hugo Santana</title>
+<meta name="description" content="Case study: sistema de automação end-to-end para gestão de falhas operacionais. n8n, Slack API, Google Sheets, Python, SQL e Looker Studio. 4 áreas, 15 Team Leaders, 24/7.">
+<meta name="author" content="Vitor Hugo Santana">
+<meta name="theme-color" content="#08100c">
+<link rel="canonical" href="https://vhsantos-data.github.io/cases/falhas-operacionais.html">
+<meta property="og:title" content="Gestão de falhas operacionais — Case study">
+<meta property="og:description" content="Do registro manual em planilha ao relatório que chega sozinho no Slack. 4 áreas, 15 TLs, 24/7.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://vhsantos-data.github.io/cases/falhas-operacionais.html">
+<meta property="og:image" content="https://vhsantos-data.github.io/assets/og.png">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;300;400;500;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/core.css">
+<link rel="stylesheet" href="/assets/css/fun.css">
+  <script src="/assets/js/fun.js" defer></script>
+</head>
+<body data-email="vhsantosdata@gmail.com">
+
+<a href="#main" class="skip">Pular para o conteúdo</a>
+<div id="prog"></div>
+
+<header id="hd">
+  <div class="wrap navbar">
+    <a href="../index.html" class="brand">VITOR<span>.</span>HUGO</a>
+    <nav class="navlinks" id="nav">
+      <a href="../index.html">Home</a>
+      <a href="../sobre.html">Sobre</a>
+      <a href="../projetos.html">Projetos</a>
+      <a href="../lab.html">Lab</a>
+      <a href="../contato.html">Contato</a>
+    </nav>
+    <button class="kbd-hint" data-cmdk-open type="button" aria-label="Abrir navegação rápida">
+      <kbd>Ctrl</kbd><kbd>K</kbd>
+    </button>
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false">
+      <i></i><i></i><i></i>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO DO CASE ============ -->
+  <section class="case-hero">
+    <div class="wrap">
+      <div class="crumb rv">
+        <a href="../index.html">Home</a> / <a href="../projetos.html">Projetos</a> / Falhas operacionais
+      </div>
+
+      <span class="tag rv">Em produção</span>
+      <h1 class="rv" data-d="1" style="margin-top:18px">
+        Gestão de falhas operacionais
+      </h1>
+      <p class="lead rv" data-d="2">
+        Do registro manual em planilha ao relatório que chega sozinho no Slack.
+        Sistema end-to-end que virou a <em>fonte oficial de dados de falha</em>
+        de quatro áreas da operação.
+      </p>
+
+      <dl class="kv rv" data-d="3">
+        <div>
+          <dt>Meu papel</dt>
+          <dd>Concepção e desenvolvimento</dd>
+        </div>
+        <div>
+          <dt>Contexto</dt>
+          <dd>Mercado Livre — Post Sales</dd>
+        </div>
+        <div>
+          <dt>Escala</dt>
+          <dd>4 áreas · 15 Team Leaders</dd>
+        </div>
+        <div>
+          <dt>Operação</dt>
+          <dd>24/7 sem intervenção</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ O PROBLEMA ============ -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow rv">01 — O problema</div>
+      <h2 class="rv" data-d="1">O dado existia.<br>Só não chegava a tempo.</h2>
+
+      <div class="prose rv" data-d="2" style="margin-top:26px">
+        <p>
+          Falhas operacionais eram registradas de forma dispersa: cada área mantinha
+          sua própria planilha, com colunas diferentes e critérios diferentes para a
+          mesma categoria de erro. Quando alguém pedia um número consolidado, começava
+          um trabalho manual de juntar abas, padronizar nomes e conferir duplicidade.
+        </p>
+        <p>
+          O resultado prático: <strong>o Team Leader só descobria um padrão de falha
+          depois que ele já tinha virado recorrente.</strong> O dado chegava tarde
+          demais para virar ação.
+        </p>
+      </div>
+
+      <div class="ba rv" data-d="2" style="margin-top:44px">
+        <div class="before">
+          <h4>Antes</h4>
+          <ul>
+            <li>Planilhas paralelas por área, sem padrão de coluna</li>
+            <li>Mesma falha classificada de formas diferentes</li>
+            <li>Consolidação manual sempre que alguém pedia</li>
+            <li>Nenhum histórico confiável para comparar semanas</li>
+            <li>Team Leader dependia de cobrança para receber número</li>
+            <li>Tempo gasto em copiar e colar, não em analisar</li>
+          </ul>
+        </div>
+        <div class="after">
+          <h4>Depois</h4>
+          <ul>
+            <li>Registro único via formulário no Slack, com campos validados</li>
+            <li>Categorias fechadas — sem texto livre em campo de classificação</li>
+            <li>Base consolidada atualizada no momento do registro</li>
+            <li>Histórico contínuo, com comparação semana a semana</li>
+            <li>Relatório chega por DM sem ninguém pedir</li>
+            <li>Tempo gasto em decidir o que fazer com o dado</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ARQUITETURA ============ -->
+  <section style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="eyebrow rv">02 — Arquitetura</div>
+      <h2 class="rv" data-d="1">Seis etapas, zero toque manual.</h2>
+      <p class="lead rv" data-d="2">
+        O dado entra uma vez pelo Slack e percorre todo o caminho sem cópia manual.
+        Cada etapa tem validação própria — <em>se algo não passa, o registro fica
+        marcado e não contamina a métrica.</em>
+      </p>
+
+      <div class="flow rv" data-d="2" style="margin-top:44px">
+        <svg viewBox="0 0 900 260" role="img" aria-labelledby="flowtitle flowdesc">
+          <title id="flowtitle">Fluxo do sistema de gestão de falhas operacionais</title>
+          <desc id="flowdesc">
+            Seis etapas em sequência: formulário no Slack, orquestração no n8n,
+            base consolidada no Google Sheets, processamento com Python e SQL,
+            envio de relatório por mensagem direta e dashboard no Looker Studio.
+          </desc>
+
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                    markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#27402f"/>
+            </marker>
+            <linearGradient id="nodeFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0e1a14"/>
+              <stop offset="100%" stop-color="#0a1410"/>
+            </linearGradient>
+          </defs>
+
+          <!-- linhas de ligação -->
+          <g stroke="#27402f" stroke-width="1" fill="none" marker-end="url(#arrow)">
+            <line class="flow-edge" x1="140" y1="70" x2="196" y2="70"/>
+            <line class="flow-edge" x1="330" y1="70" x2="386" y2="70"/>
+            <line class="flow-edge" x1="520" y1="70" x2="576" y2="70"/>
+            <!-- descida para a segunda fileira -->
+            <path class="flow-edge" d="M660,96 L660,150 L236,150 L236,176"/>
+            <line class="flow-edge" x1="330" y1="196" x2="386" y2="196"/>
+            <line class="flow-edge" x1="520" y1="196" x2="576" y2="196"/>
+          </g>
+
+          <!-- pulso de dados percorrendo o fluxo -->
+          <circle class="pulse-dot" r="3.5" fill="#00ff88">
+            <animateMotion dur="7s" repeatCount="indefinite"
+              path="M60,70 L660,70 L660,150 L236,150 L236,196 L810,196"/>
+          </circle>
+
+          <!-- NÓ 01 -->
+          <g class="flow-node" style="animation-delay:.0s">
+            <rect x="14" y="44" width="126" height="52" rx="2"
+                  fill="url(#nodeFill)" stroke="#27402f"/>
+            <text x="26" y="66" font-family="JetBrains Mono, monospace"
+                  font-size="9" fill="#5c7266" letter-spacing="1.6">01 · INPUT</text>
+            <text x="26" y="84" font-family="JetBrains Mono, monospace"
+                  font-size="12" fill="#d8e6dd">Slack Form</text>
+          </g>
+
+          <!-- NÓ 02 -->
+          <g class="flow-node" style="animation-delay:.25s">
+            <rect x="204" y="44" width="126" height="52" rx="2"
+                  fill="url(#nodeFill)" stroke="#1a4a32"/>
+            <text x="216" y="66" font-family="JetBrains Mono, monospace"
+                  font-size="9" fill="#5c7266" letter-spacing="1.6">02 · ORQUESTRA</text>
+            <text x="216" y="84" font-family="JetBrains Mono, monospace"
+                  font-size="12" fill="#00ff88">n8n</text>
+          </g>
+
+          <!-- NÓ 03 -->
+          <g class="flow-node" style="animation-delay:.5s">
+            <rect x="394" y="44" width="126" height="52" rx="2"
+                  fill="url(#nodeFill)" stroke="#27402f"/>
+            <text x="406" y="66" font-family="JetBrains Mono, monospace"
+                  font-size="9" fill="#5c7266" letter-spacing="1.6">03 · BASE</text>
+            <text x="406" y="84" font-family="JetBrains Mono, monospace"
+                  font-size="12" fill="#d8e6dd">Google Sheets</text>
+          </g>
+
+          <!-- NÓ 04 -->
+          <g class="flow-node" style="animation-delay:.75s">
+            <rect x="584" y="44" width="126" height="52" rx="2"
+                  fill="url(#nodeFill)" stroke="#27402f"/>
+            <text x="596" y="66" font-family="JetBrains Mono, monospace"
+                  font-size="9" fill="#5c7266" letter-spacing="1.6">04 · PROCESSA</text>
+            <text x="596" y="84" font-family="JetBrains Mono, monospace"
+                  font-size="12" fill="#d8e6dd">Python + SQL</text>
+          </g>
+
+          <!-- NÓ 05 -->
+          <g class="flow-node" style="animation-delay:1s">
+            <rect x="204" y="170" width="126" height="52" rx="2"
+                  fill="url(#nodeFill)" stroke="#1a4a32"/>
+            <text x="216" y="192" font-family="JetBrains Mono, monospace"
+                  font-size="9" fill="#5c7266" letter-spacing="1.6">05 · ENTREGA</text>
+            <text x="216" y="210" font-family="JetBrains Mono, monospace"
+                  font-size="12" fill="#00ff88">DM · 15 TLs</text>
+          </g>
+
+          <!-- NÓ 06 -->
+          <g class="flow-node" style="animation-delay:1.25s">
+            <rect x="394" y="170" width="126" height="52" rx="2"
+                  fill="url(#nodeFill)" stroke="#27402f"/>
+            <text x="406" y="192" font-family="JetBrains Mono, monospace"
+                  font-size="9" fill="#5c7266" letter-spacing="1.6">06 · VISUAL</text>
+            <text x="406" y="210" font-family="JetBrains Mono, monospace"
+                  font-size="12" fill="#d8e6dd">Looker Studio</text>
+          </g>
+
+          <!-- NÓ FINAL -->
+          <g class="flow-node" style="animation-delay:1.5s">
+            <rect x="584" y="170" width="200" height="52" rx="2"
+                  fill="none" stroke="#1b2c23" stroke-dasharray="3 3"/>
+            <text x="596" y="192" font-family="JetBrains Mono, monospace"
+                  font-size="9" fill="#5c7266" letter-spacing="1.6">RESULTADO</text>
+            <text x="596" y="210" font-family="JetBrains Mono, monospace"
+                  font-size="12" fill="#8fa89a">decisão do Team Leader</text>
+          </g>
+        </svg>
+
+        <div class="flow-legend">
+          <span><i class="swatch" style="background:#0e1a14;border-color:#1a4a32"></i> Etapa automatizada</span>
+          <span><i class="swatch" style="background:#0e1a14"></i> Armazenamento / saída</span>
+          <span><i class="swatch" style="background:#00ff88;border-color:#00ff88"></i> Fluxo de dados</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AS ETAPAS ============ -->
+  <section style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="eyebrow rv">03 — Como funciona</div>
+      <h2 class="rv" data-d="1">Etapa por etapa.</h2>
+
+      <div class="steps rv" data-d="2" style="margin-top:40px">
+        <div class="step">
+          <div>
+            <h3>Registro via Slack</h3>
+            <p>
+              A falha é registrada por formulário dentro do próprio Slack — sem abrir
+              planilha, sem trocar de ferramenta. Campos de categoria são fechados,
+              o que elimina a variação de escrita que antes impedia qualquer
+              agrupamento confiável.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Orquestração no n8n</h3>
+            <p>
+              O n8n recebe o registro, valida o preenchimento, identifica a área e o
+              Team Leader responsável, e grava na base. Registro incompleto ou fora
+              do padrão é marcado em vez de descartado — o erro fica rastreável.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Base consolidada</h3>
+            <p>
+              Google Sheets como camada de persistência, com controle de duplicidade
+              por identificador único. Uma aba separada guarda os IDs já processados,
+              o que impede que o mesmo registro entre duas vezes se o fluxo reexecutar.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Processamento e métricas</h3>
+            <p>
+              Python e SQL calculam volume por categoria, variação contra o período
+              anterior, concentração por área e recorrência. É aqui que o dado bruto
+              vira informação acionável.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Três relatórios automáticos</h3>
+            <p>
+              Diário para reação rápida, semanal para tendência e mensal para
+              consolidação. Todos entregues por mensagem direta a cada um dos 15
+              Team Leaders, no horário em que a informação ainda é útil.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <h3>Dashboard para exploração</h3>
+            <p>
+              Looker Studio para quem precisa cortar o dado de outra forma: filtro por
+              área, por período, por categoria. O relatório responde à pergunta padrão;
+              o dashboard responde às perguntas novas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DECISÕES TÉCNICAS ============ -->
+  <section style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="eyebrow rv">04 — Decisões técnicas</div>
+      <h2 class="rv" data-d="1">Por que assim<br>e não de outro jeito.</h2>
+
+      <div class="grid-2 rv" data-d="2" style="margin-top:44px">
+        <div class="card">
+          <span class="tag mute">Decisão</span>
+          <h3 style="margin-top:14px">Slack como ponto de entrada</h3>
+          <p>
+            Poderia ser um formulário web. Mas a operação vive no Slack o dia inteiro —
+            pedir para abrir outra aba significa registro que não acontece. A
+            ferramenta certa é a que a pessoa já tem aberta.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag mute">Decisão</span>
+          <h3 style="margin-top:14px">Sheets em vez de banco relacional</h3>
+          <p>
+            Um Postgres seria mais robusto, mas exigiria provisionamento e acesso que
+            a operação não controla. Sheets entrega auditabilidade imediata: qualquer pessoa da área abre e
+            confere o dado sem precisar de credencial ou de mim como intermediário.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag mute">Decisão</span>
+          <h3 style="margin-top:14px">Categoria fechada, não texto livre</h3>
+          <p>
+            Campo aberto gera vinte formas de escrever a mesma falha e mata qualquer
+            agrupamento. Perde-se nuance, mas ganha-se a possibilidade de contar.
+            Dado que não agrupa não vira métrica.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag mute">Decisão</span>
+          <h3 style="margin-top:14px">Um registro por execução</h3>
+          <p>
+            O fluxo processa um item por vez em vez de lote. Fica mais lento, mas um
+            registro problemático não derruba a rodada inteira — e o log aponta
+            exatamente onde parou.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag mute">Decisão</span>
+          <h3 style="margin-top:14px">Controle de idempotência</h3>
+          <p>
+            Aba dedicada a IDs já processados. Se o fluxo reexecuta por falha de rede
+            ou reinício, o registro não duplica. Sem isso, a métrica infla sozinha e
+            perde credibilidade na primeira semana.
+          </p>
+        </div>
+        <div class="card">
+          <span class="tag mute">Decisão</span>
+          <h3 style="margin-top:14px">Relatório antes de dashboard</h3>
+          <p>
+            O dashboard veio depois. Primeiro provei valor com algo que chega sozinho
+            na mão da pessoa. Dashboard bonito que ninguém abre não muda rotina —
+            relatório que aparece no Slack, muda.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ O QUE QUEBROU ============ -->
+  <section style="border-top:1px solid var(--line)">
+    <div class="wrap wrap-narrow">
+      <div class="eyebrow rv">05 — O que quebrou no caminho</div>
+      <h2 class="rv" data-d="1">Sistema em produção<br>não é sistema em teste.</h2>
+
+      <div class="prose rv" data-d="2" style="margin-top:26px">
+        <p>
+          A primeira versão processava todos os registros pendentes de uma vez.
+          Funcionou no teste com três itens e quebrou na primeira rodada real com
+          volume — o fluxo estourava limite e parava no meio, deixando parte dos
+          dados gravados e parte não.
+        </p>
+        <p>
+          <strong>Correção:</strong> processamento unitário, com controle de estado
+          entre execuções. Cada rodada pega o próximo registro não processado,
+          conclui o ciclo completo e só então libera o seguinte. Mais lento,
+          previsível e depurável.
+        </p>
+        <p>
+          O segundo problema foi mais sutil: quando o fluxo reexecutava, registros já
+          gravados entravam de novo. A métrica subia sem que nenhuma falha nova
+          tivesse acontecido. Resolvido com a aba de IDs processados e verificação
+          antes da gravação.
+        </p>
+        <p>
+          <strong>O aprendizado que levo:</strong> em automação, o caso de erro não é
+          exceção — é parte do funcionamento normal. API muda, aba é renomeada, alguém
+          preenche fora do padrão. Um fluxo que só funciona no caminho ideal não está
+          pronto para produção.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTADOS ============ -->
+  <section class="metrics" style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="metrics-grid">
+        <div class="metric rv">
+          <div class="num" data-count="4">0</div>
+          <div class="lbl">Áreas atendidas</div>
+        </div>
+        <div class="metric rv" data-d="1">
+          <div class="num" data-count="15">0</div>
+          <div class="lbl">Team Leaders</div>
+        </div>
+        <div class="metric rv" data-d="2">
+          <div class="num" data-count="3">0</div>
+          <div class="lbl">Relatórios recorrentes</div>
+        </div>
+        <div class="metric rv" data-d="3">
+          <div class="num" data-count="24" data-suffix="/7">0</div>
+          <div class="lbl">Sem intervenção manual</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap wrap-narrow">
+      <div class="eyebrow rv">06 — Resultado</div>
+      <h2 class="rv" data-d="1">O que mudou na prática.</h2>
+
+      <div class="prose rv" data-d="2" style="margin-top:26px">
+        <p>
+          O sistema virou a fonte oficial de dados de falha das quatro áreas.
+          Não existe mais a pergunta "de qual planilha veio esse número" —
+          existe uma base, com histórico contínuo e critério padronizado.
+        </p>
+        <p>
+          O Team Leader passou a receber o dado antes de precisar dele, não depois
+          de pedir. Isso muda o tipo de conversa: em vez de descobrir um padrão
+          recorrente semanas depois, ele vê a concentração aparecendo e age enquanto
+          ainda é cedo.
+        </p>
+        <p>
+          E o tempo que antes era gasto consolidando planilha passou a ser gasto
+          analisando o que a planilha mostra.
+        </p>
+      </div>
+
+      <div class="terminal rv" data-d="2" style="margin-top:44px">
+        <div class="term-bar">
+          <span class="dot on"></span><span class="dot"></span><span class="dot"></span>
+          <span class="term-title">resumo.json</span>
+        </div>
+        <div class="term-body">
+          <div><span class="k">stack</span> <span class="v">["n8n","Python","SQL","Slack API","Sheets","Looker"]</span></div>
+          <div><span class="k">entrada</span> <span class="v">"formulário Slack"</span></div>
+          <div><span class="k">saida</span> <span class="v">["DM diária","DM semanal","DM mensal","dashboard"]</span></div>
+          <div><span class="k">alcance</span> <span class="v">"4 áreas · 15 Team Leaders"</span></div>
+          <div><span class="k">intervencao_manual</span> <span class="v">0</span></div>
+          <div><span class="k">status</span> <span class="v">"em produção"</span><span class="caret"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUOTE ============ -->
+  <section class="quote">
+    <div class="wrap">
+      <blockquote class="rv">
+        O melhor indicador de que a automação funcionou<br>
+        é ninguém mais falar dela.
+      </blockquote>
+      <cite class="rv" data-d="1">Vitor Hugo Santana</cite>
+    </div>
+  </section>
+
+  <!-- ============ NAVEGAÇÃO ============ -->
+  <section style="text-align:center">
+    <div class="wrap">
+      <h2 class="rv">Quer ver o código por trás?</h2>
+      <p class="lead rv" data-d="1" style="margin:18px auto 0;text-align:left">
+        O Lab tem os padrões de query, os nós de código em Python e a estrutura
+        de workflow que uso nesse tipo de fluxo.
+      </p>
+      <div class="cta-row rv" data-d="2" style="justify-content:center;margin-top:30px">
+        <a class="btn" href="../lab.html"><span>Ir para o Lab</span></a>
+        <a class="btn ghost" href="../projetos.html"><span>Outros projetos</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <p>&copy; <span data-year>2026</span> Vitor Hugo Santana</p>
+      <p class="stat" style="margin-top:12px">
+        <span class="dot on"></span> Sistemas operando — 24/7
+      </p>
+    </div>
+    <nav class="foot-nav">
+      <a href="../index.html">Home</a>
+      <a href="../sobre.html">Sobre</a>
+      <a href="../projetos.html">Projetos</a>
+      <a href="../lab.html">Lab</a>
+      <a href="../contato.html">Contato</a>
+      <a href="https://github.com/vhsantos-data" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.linkedin.com/in/vhsantos-data" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- COMMAND PALETTE -->
+<div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Navegação rápida">
+  <div class="cmdk-box">
+    <input type="text" placeholder="Buscar página ou ação..." aria-label="Buscar">
+    <ul></ul>
+    <div class="cmdk-foot">
+      <span>↑↓ navegar</span><span>↵ abrir</span><span>esc fechar</span>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/js/i18n-dict.js" defer></script>
+<script src="../assets/js/i18n.js" defer></script>
+<script src="../assets/js/core.js" defer></script>
+<link rel="stylesheet" href="assets/css/core.css">
+<link rel="stylesheet" href="assets/css/fun.css">
+</body>
+</html>
