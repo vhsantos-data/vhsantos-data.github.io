@@ -171,6 +171,96 @@ body header,body main,body footer{position:relative;z-index:1}
   background:var(--bg);position:sticky;top:0;
 }
 
+/* ============================================================
+   PHOSPHOR — quatro modos emprestados da peça.
+   A paleta e os gestos vêm do projeto real, não são invenção:
+   a casa é uma gravação que se gasta, filmada por uma câmara
+   que ficou ligada no canto e nunca mais foi desligada.
+   ============================================================ */
+
+/* ---------- TEMA: FÓSFORO (a paleta verdadeira da peça) ---------- */
+body.t-phosphor{
+  --bg:#050807;--void:#000000;--bg-raised:#0a1410;--bg-card:#0f1a15;
+  --line:#0f2a1f;--line-strong:#1a4a32;
+  --fg:#c9e8d4;--fg-dim:#6f9c81;--fg-ghost:#2d5d44;
+  --accent:#00ff88;--accent-dim:#1a4a32;--accent-haze:rgba(0,255,136,.07);
+}
+body.t-phosphor .terminal{box-shadow:0 30px 80px -40px rgba(0,255,136,.10)}
+
+/* ---------- MODO FITA — o tracking a passar ---------- */
+#tape{
+  position:fixed;inset:0;z-index:9992;pointer-events:none;
+  opacity:0;transition:opacity 500ms ease;
+}
+#tape.on{opacity:1}
+#tape .band{
+  position:absolute;left:0;width:100%;height:78px;
+  background:linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255,255,255,.028) 22%,
+    rgba(0,255,136,.055) 50%,
+    rgba(255,255,255,.028) 78%,
+    transparent);
+  animation:tapeRoll 7.5s linear infinite;
+  will-change:transform;
+}
+#tape .band.two{animation-duration:19s;animation-delay:-6s;height:34px;opacity:.55}
+@keyframes tapeRoll{
+  from{transform:translateY(-90px)}
+  to{transform:translateY(100vh)}
+}
+/* a imagem sangra de lado quando a fita passa */
+body.tape main{animation:tapeSkew 7.5s linear infinite}
+@keyframes tapeSkew{
+  0%,88%,100%{transform:none}
+  90%{transform:translateX(-1px)}
+  93%{transform:translateX(2px)}
+  96%{transform:translateX(-1px)}
+}
+
+/* ---------- MODO CÂMARA — ela nunca parou de gravar ---------- */
+#rec{
+  position:fixed;inset:0;z-index:9992;pointer-events:none;
+  opacity:0;transition:opacity 400ms ease;font-family:var(--mono);
+}
+#rec.on{opacity:1}
+#rec .mark{
+  position:absolute;top:22px;right:24px;display:flex;align-items:center;gap:9px;
+  font-size:12px;letter-spacing:.24em;color:#ff5a5a;
+}
+#rec .mark i{
+  width:10px;height:10px;border-radius:50%;background:#ff2d2d;
+  box-shadow:0 0 10px rgba(255,45,45,.8);animation:recBlink 1.6s steps(1) infinite;
+}
+@keyframes recBlink{0%,49%{opacity:1}50%,100%{opacity:.15}}
+#rec .tc{
+  position:absolute;bottom:22px;left:24px;font-size:12px;letter-spacing:.2em;
+  color:var(--fg-dim);font-variant-numeric:tabular-nums;
+}
+#rec .sp{
+  position:absolute;bottom:22px;right:24px;font-size:11px;letter-spacing:.24em;
+  color:var(--fg-ghost);
+}
+/* cantos de enquadramento */
+#rec .fr{position:absolute;inset:16px;border:0}
+#rec .fr::before,#rec .fr::after{
+  content:'';position:absolute;width:26px;height:26px;
+  border:2px solid rgba(255,255,255,.22);
+}
+#rec .fr::before{top:0;left:0;border-right:0;border-bottom:0}
+#rec .fr::after{bottom:0;right:0;border-left:0;border-top:0}
+
+/* ---------- MODO DESGASTE — a fita perde o que disse ---------- */
+.worn{
+  position:relative;display:inline-block;vertical-align:baseline;
+  color:transparent!important;user-select:none;
+}
+.worn::after{
+  content:'';position:absolute;left:0;right:0;top:52%;height:1px;
+  background:var(--fg-ghost);opacity:.45;
+}
+
 /* ---------- ACESSIBILIDADE ---------- */
 @media (prefers-reduced-motion:reduce){
   body.crt main,body.crt::before,body.glitch h1,body.glitch h2,
@@ -180,4 +270,9 @@ body header,body main,body footer{position:relative;z-index:1}
   body.float .chip,body.float .tag{transform:none!important}
   #matrix{display:none}
   .trail-dot{display:none}
+  /* os modos do PHOSPHOR: o que pisca ou desliza pára, o resto fica */
+  #tape .band,body.tape main{animation:none!important}
+  body.tape main{transform:none!important}
+  #tape{display:none}
+  #rec .mark i{animation:none!important;opacity:1}
 }

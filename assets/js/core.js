@@ -154,19 +154,33 @@
     // detecta se estamos em subpasta (/cases/) para ajustar caminho
     var up = location.pathname.indexOf('/cases/') > -1 ? '../' : '';
 
+    /* Os grupos, por ordem de utilidade: primeiro o que leva a
+       algum lado, depois o que faz alguma coisa, e só no fim o que
+       serve para brincar. O Ctrl+K tinha vinte e tal linhas numa
+       lista achatada e não se via onde acabava o útil. */
+    var GRUPOS = [
+      { g: 'ir',     t: 'Ir para' },
+      { g: 'acao',   t: 'Ações' },
+      { g: 'tema',   t: 'Aparência' },
+      { g: 'modo',   t: 'Modos' },
+      { g: 'efeito', t: 'Efeitos e depuração' },
+      { g: 'reset',  t: 'Repor' }
+    ];
+    var ORDEM = {};
+    GRUPOS.forEach(function (x, i) { ORDEM[x.g] = i; });
+
     var ITEMS = [
-      { n: 'Home',                    k: 'página',  u: up + 'index.html' },
-      { n: 'Sobre',                   k: 'página',  u: up + 'sobre.html' },
-      { n: 'Projetos',                k: 'página',  u: up + 'projetos.html' },
-      { n: 'PHOSPHOR — peça autoral', k: 'página',  u: up + 'phosphor.html' },
-      { n: 'Lab — snippets',          k: 'página',  u: up + 'lab.html' },
-      { n: 'Contato',                 k: 'página',  u: up + 'contato.html' },
-      { n: 'Case: falhas operacionais', k: 'case',  u: up + 'cases/falhas-operacionais.html' },
-      { n: 'GitHub',                  k: 'externo', u: 'https://github.com/vhsantos-data', x: 1 },
-     { n: 'LinkedIn',                k: 'externo', u: 'https://www.linkedin.com/in/vhsantos-data', x: 1 },
-      { n: 'Copiar email',            k: 'ação',    a: 'mail' },
-      { n: 'Alternar modo CRT',       k: 'ação',    a: 'crt' },
-      { n: 'Ir para o topo',          k: 'ação',    a: 'top' }
+      { g: 'ir',   n: 'Home',                    k: 'página',  u: up + 'index.html' },
+      { g: 'ir',   n: 'Sobre',                   k: 'página',  u: up + 'sobre.html' },
+      { g: 'ir',   n: 'Projetos',                k: 'página',  u: up + 'projetos.html' },
+      { g: 'ir',   n: 'PHOSPHOR — peça autoral', k: 'página',  u: up + 'phosphor.html' },
+      { g: 'ir',   n: 'Lab — snippets',          k: 'página',  u: up + 'lab.html' },
+      { g: 'ir',   n: 'Contato',                 k: 'página',  u: up + 'contato.html' },
+      { g: 'ir',   n: 'Case: falhas operacionais', k: 'case',  u: up + 'cases/falhas-operacionais.html' },
+      { g: 'acao', n: 'Copiar email',            k: 'ação',    a: 'mail' },
+      { g: 'acao', n: 'Ir para o topo',          k: 'ação',    a: 'top' },
+      { g: 'acao', n: 'GitHub',                  k: 'externo', u: 'https://github.com/vhsantos-data', x: 1 },
+      { g: 'acao', n: 'LinkedIn',                k: 'externo', u: 'https://www.linkedin.com/in/vhsantos-data', x: 1 }
     ];
 
     /* junta navegação + comandos de diversão do fun.js */
@@ -175,21 +189,43 @@
       if (window.VH_FUN && typeof window.VH_FUN.items === 'function') {
         base = base.concat(window.VH_FUN.items());
       }
-      return base;
+      /* estável: dentro do grupo mantém-se a ordem de origem */
+      return base.map(function (it, i) { return { it: it, i: i }; })
+        .sort(function (a, b) {
+          var ga = ORDEM[a.it.g] === undefined ? 99 : ORDEM[a.it.g];
+          var gb = ORDEM[b.it.g] === undefined ? 99 : ORDEM[b.it.g];
+          return ga - gb || a.i - b.i;
+        })
+        .map(function (x) { return x.it; });
     }
 
     var filtered = allItems();
     var sel = 0;
 
+    var linhas = [];   /* só os <li> navegáveis, na ordem de `filtered` */
+
     function render() {
       list.innerHTML = '';
+      linhas = [];
       if (!filtered.length) {
-        var li = document.createElement('li');
-        li.innerHTML = '<span class="ci-name" style="color:var(--fg-ghost)">Nada encontrado</span>';
-        list.appendChild(li);
+        var vazio = document.createElement('li');
+        vazio.innerHTML = '<span class="ci-name" style="color:var(--fg-ghost)">Nada encontrado</span>';
+        list.appendChild(vazio);
         return;
       }
+      var grupoAtual = null;
       filtered.forEach(function (it, i) {
+        if (it.g !== grupoAtual) {
+          grupoAtual = it.g;
+          var titulo = GRUPOS.filter(function (x) { return x.g === it.g; })[0];
+          if (titulo) {
+            var cab = document.createElement('li');
+            cab.className = 'cmdk-group';
+            cab.setAttribute('aria-hidden', 'true');
+            cab.textContent = titulo.t;
+            list.appendChild(cab);
+          }
+        }
         var li = document.createElement('li');
         if (i === sel) li.className = 'sel';
         if (it.active && it.active()) li.setAttribute('data-active', '1');
@@ -201,10 +237,15 @@
         li.addEventListener('click', function () { run(it); });
         li.addEventListener('mouseenter', function () {
           sel = i;
-          $$('li', list).forEach(function (l, j) { l.classList.toggle('sel', j === i); });
+          linhas.forEach(function (l, j) { l.classList.toggle('sel', j === i); });
         });
         list.appendChild(li);
+        linhas.push(li);
       });
+      /* com grupos a lista ficou mais alta: a selecção tem de se ver */
+      if (linhas[sel] && linhas[sel].scrollIntoView) {
+        linhas[sel].scrollIntoView({ block: 'nearest' });
+      }
     }
 
     function run(it) {

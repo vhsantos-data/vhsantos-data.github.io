@@ -15,7 +15,8 @@
     { id: 'amber',   cls: 't-amber', label: 'Tema: Âmbar' },
     { id: 'ice',     cls: 't-ice',   label: 'Tema: Azul frio' },
     { id: 'vapor',   cls: 't-vapor', label: 'Tema: Magenta' },
-    { id: 'paper',   cls: 't-paper', label: 'Tema: Papel (claro)' }
+    { id: 'paper',   cls: 't-paper', label: 'Tema: Papel (claro)' },
+  { id: 'phosphor', cls: 't-phosphor', label: 'Tema: Fósforo (PHOSPHOR)' }
   ];
 
   var MODES = [
@@ -24,7 +25,10 @@
     { id: 'zen',    cls: 'zen',    label: 'Modo zen (leitura)' },
     { id: 'invert', cls: 'invert', label: 'Inverter cores' },
     { id: 'wire',   cls: 'wire',   label: 'Wireframe (raio-x)' },
-    { id: 'float',  cls: 'float',  label: 'Sem gravidade' }
+    { id: 'float',  cls: 'float',  label: 'Sem gravidade' },
+  { id: 'tape',   cls: 'tape',   label: 'Modo fita (tracking)', ph: 1 },
+  { id: 'rec',    cls: 'rec',    label: 'Modo câmara (REC)', ph: 1 },
+  { id: 'wear',   cls: 'wear',   label: 'Modo desgaste (a fita perde palavras)', ph: 1 }
   ];
 
   /* ---------- estado ---------- */
@@ -75,10 +79,139 @@
   /* ---------- modos ---------- */
   function hasMode(id) { return state.modes.indexOf(id) > -1; }
 
+
+  /* ==========================================================
+     OS TRÊS MODOS DO PHOSPHOR
+     Cada um empresta uma decisão da peça, não é enfeite solto.
+     ========================================================== */
+
+  var ph = { tape: null, rec: null, tc: null, t0: 0, worn: null };
+
+  /* ---- FITA: a banda de tracking a descer o ecrã ---- */
+  function setTape(on) {
+    if (on && !ph.tape) {
+      ph.tape = document.createElement('div');
+      ph.tape.id = 'tape';
+      ph.tape.setAttribute('aria-hidden', 'true');
+      ph.tape.innerHTML = '<div class="band"></div><div class="band two"></div>';
+      body.appendChild(ph.tape);
+    }
+    if (ph.tape) ph.tape.classList.toggle('on', on);
+  }
+
+  /* ---- CÂMARA: ela ficou ligada no canto e nunca foi desligada ---- */
+  function doisDig(n) { return (n < 10 ? '0' : '') + n; }
+
+  function setRec(on) {
+    if (on && !ph.rec) {
+      ph.rec = document.createElement('div');
+      ph.rec.id = 'rec';
+      ph.rec.setAttribute('aria-hidden', 'true');
+      ph.rec.innerHTML =
+        '<div class="fr"></div>' +
+        '<div class="mark"><i></i>REC</div>' +
+        '<div class="tc">00:00:00</div>' +
+        '<div class="sp">SP &nbsp;·&nbsp; EP-120</div>';
+      body.appendChild(ph.rec);
+      ph.tcEl = ph.rec.querySelector('.tc');
+    }
+    if (ph.rec) ph.rec.classList.toggle('on', on);
+    clearInterval(ph.tc);
+    if (on) {
+      /* o contador não começa do zero: a câmara já estava a gravar
+         antes de alguém chegar (ADR-0004, o canto do cômodo). */
+      ph.t0 = Date.now() - (37 * 60 + 12) * 1000;
+      ph.tc = setInterval(function () {
+        if (!ph.tcEl) return;
+        var d = Math.floor((Date.now() - ph.t0) / 1000);
+        ph.tcEl.textContent =
+          doisDig(Math.floor(d / 3600)) + ':' + doisDig(Math.floor(d / 60) % 60) + ':' + doisDig(d % 60);
+      }, 1000);
+    }
+  }
+
+  /* ---- DESGASTE: o que a casa disse gasta-se com o uso ----
+     Os buracos caem sempre nas mesmas palavras: é dano de fita,
+     não estática. A semente vem do próprio texto (FNV-1a), como
+     em `state/wear.ts` na peça. */
+  function seedOf(t) {
+    var h = 2166136261;
+    for (var i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); }
+    return h >>> 0;
+  }
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  var GASTO = 0.17;      /* fração de palavras que se perde */
+  var MINIMO = 6;        /* frases curtas não se gastam: não sobrava nada */
+
+  function desgastar() {
+    if (ph.worn) return;
+    ph.worn = [];
+    var alvos = document.querySelectorAll('main p, main li, main blockquote');
+    Array.prototype.forEach.call(alvos, function (el) {
+      if (el.closest('pre, code, .term-body, .cmdk, #rec, #stats, .panel')) return;
+      var texto = (el.textContent || '').trim();
+      if (texto.split(/\s+/).length < MINIMO) return;
+
+      var rng = mulberry32(seedOf(texto));
+      var nos = [];
+      var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      var n;
+      while ((n = w.nextNode())) { if (n.nodeValue.trim()) nos.push(n); }
+      if (!nos.length) return;
+
+      ph.worn.push({ el: el, html: el.innerHTML });
+
+      nos.forEach(function (no) {
+        var partes = no.nodeValue.split(/(\s+)/);
+        var frag = document.createDocumentFragment();
+        partes.forEach(function (parte) {
+          if (!parte.trim() || rng() > GASTO || parte.length < 3) {
+            frag.appendChild(document.createTextNode(parte));
+            return;
+          }
+          var vao = document.createElement('span');
+          vao.className = 'worn';
+          vao.setAttribute('aria-label', 'palavra perdida');
+          vao.textContent = parte;
+          frag.appendChild(vao);
+        });
+        no.parentNode.replaceChild(frag, no);
+      });
+    });
+  }
+
+  function restaurar() {
+    if (!ph.worn) return;
+    ph.worn.forEach(function (r) { r.el.innerHTML = r.html; });
+    ph.worn = null;
+  }
+
+  function setWear(on) {
+    if (on) desgastar(); else restaurar();
+  }
+
+  /* Trocar de idioma reescreve o innerHTML e leva o desgaste com ele;
+     o que estava guardado para restaurar passa a ser da língua errada.
+     Por isso larga-se o registo e volta a gastar-se por cima do novo. */
+  document.addEventListener('vh:lang', function () {
+    if (hasMode('wear')) { ph.worn = null; setTimeout(desgastar, 0); }
+  });
+
+  var EFEITO = { tape: setTape, rec: setRec, wear: setWear };
+
   function setMode(id, on) {
     var m = MODES.filter(function (x) { return x.id === id; })[0];
     if (!m) return;
     body.classList.toggle(m.cls, on);
+    if (EFEITO[id]) EFEITO[id](on);
     var i = state.modes.indexOf(id);
     if (on && i === -1) state.modes.push(id);
     if (!on && i > -1) state.modes.splice(i, 1);
@@ -98,7 +231,10 @@
     stopMatrix();
     stopTrail();
     setStats(false);
-    MODES.forEach(function (m) { body.classList.remove(m.cls); });
+    MODES.forEach(function (m) {
+      body.classList.remove(m.cls);
+      if (EFEITO[m.id]) EFEITO[m.id](false);
+    });
     applyTheme('default');
     state.modes.length = 0;
     state.matrix = false;
@@ -393,6 +529,7 @@
 
       THEMES.forEach(function (t) {
         out.push({
+          g: 'tema',
           n: t.label,
           k: 'tema',
           fun: 1,
@@ -403,8 +540,9 @@
 
       MODES.forEach(function (m) {
         out.push({
+          g: 'modo',
           n: m.label,
-          k: 'modo',
+          k: m.ph ? 'phosphor' : 'modo',
           fun: 1,
           active: function () { return hasMode(m.id); },
           run: function () { toggleMode(m.id); }
@@ -412,34 +550,40 @@
       });
 
       out.push({
+        g: 'efeito',
         n: 'Matrix rain',
         k: 'efeito', fun: 1,
         active: function () { return state.matrix; },
         run: toggleMatrix
       });
       out.push({
+        g: 'efeito',
         n: 'Rastro do cursor',
         k: 'efeito', fun: 1,
         active: function () { return state.trail; },
         run: toggleTrail
       });
       out.push({
+        g: 'efeito',
         n: 'Painel de stats (fps, DOM)',
         k: 'debug', fun: 1,
         active: function () { return state.stats; },
         run: toggleStats
       });
       out.push({
+        g: 'tema',
         n: 'Alternar tema (ciclar)',
         k: 'tema', fun: 1,
         run: cycleTheme
       });
       out.push({
+        g: 'efeito',
         n: 'Chuva de partículas',
         k: 'efeito', fun: 1,
         run: function () { confetti(); toast('Enjoy'); }
       });
       out.push({
+        g: 'reset',
         n: 'Restaurar tudo ao padrão',
         k: 'reset', fun: 1,
         run: resetAll
@@ -451,7 +595,30 @@
 
   /* ---------- restaura estado salvo ---------- */
   applyTheme(state.theme);
-  state.modes.slice().forEach(function (id) { setMode(id, true); });
+
+  /* O DESGASTE É O ÚLTIMO A ENTRAR.
+     O fun.js corre antes do i18n (está no <head>, o outro no fim do
+     <body>), e o i18n indexa a página guardando o innerHTML de cada
+     bloco como original. Se o desgaste entrasse primeiro, o que ficava
+     guardado como "original" era o texto já com buracos — e trocar de
+     idioma passava a restaurar o estrago. Por isso espera-se pelo
+     primeiro `vh:lang`, e há um prazo de segurança para o caso de o
+     i18n não existir nesta página. */
+  state.modes.slice().forEach(function (id) {
+    if (id !== 'wear') setMode(id, true);
+  });
+  if (state.modes.indexOf('wear') > -1) {
+    body.classList.add('wear');
+    var armado = false;
+    var armar = function () {
+      if (armado) return;
+      armado = true;
+      document.removeEventListener('vh:lang', armar);
+      desgastar();
+    };
+    document.addEventListener('vh:lang', armar);
+    setTimeout(armar, 600);
+  }
   if (state.matrix) startMatrix();
   if (state.trail) startTrail();
   if (state.stats) setStats(true);
