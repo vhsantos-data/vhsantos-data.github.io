@@ -668,6 +668,20 @@ window.VH_I18N = {
       "In active development",
 
     /* ---------- CASE PHOSPHOR · backend ---------- */
+
+    /* ---------- PHOSPHOR · aba própria ---------- */
+    "Fora do trabalho com dados, construo isto: uma casa escura que não é um lugar — é uma gravação a passar. Sete salas, uma câmara que nunca para de gravar, e um site inteiro escrito à mão em TypeScript, sem framework e sem motor de jogo.":
+      "Outside my data work, I build this: a dark house that is not a place — it is a recording playing. Seven rooms, a camera that never stops recording, and an entire site written by hand in TypeScript, <em>no framework and no game engine</em>.",
+    "Não é só a frente. Por trás corre uma API em Express sobre PostgreSQL, com autenticação sem palavra-passe e testes de integração contra um banco verdadeiro. É o projeto mais complexo que já construí, e o que me ensinou a desconfiar de mim.":
+      "It is not only the front. Behind it runs an Express API over PostgreSQL, with passwordless authentication and integration tests against a real database. It is the most complex project I have built, and the one that taught me to distrust myself.",
+    "Salas na casa":
+      "Rooms in the house",
+    "Fora do trabalho com dados, construo isto: uma casa escura que não é um lugar — é uma gravação a passar. Sem framework e sem motor de jogo, com uma API em Express sobre PostgreSQL por trás. É o projeto mais complexo que já construí, e o que me ensinou a desconfiar de mim.":
+      "Outside my data work, I build this: a dark house that is not a place — it is a recording playing. No framework and no game engine, with an Express API over PostgreSQL behind it. <em>It is the most complex project I have built, and the one that taught me to distrust myself.</em>",
+    "Entrar no PHOSPHOR":
+      "Enter PHOSPHOR",
+    "Ver a peça →":
+      "View the piece →",
     "03 — O backend":
       "03 — The backend",
     "04 — Disciplina":
@@ -1635,6 +1649,20 @@ window.VH_I18N = {
       "En desarrollo activo",
 
     /* ---------- CASE PHOSPHOR · backend ---------- */
+
+    /* ---------- PHOSPHOR · aba própria ---------- */
+    "Fora do trabalho com dados, construo isto: uma casa escura que não é um lugar — é uma gravação a passar. Sete salas, uma câmara que nunca para de gravar, e um site inteiro escrito à mão em TypeScript, sem framework e sem motor de jogo.":
+      "Fuera del trabajo con datos, construyo esto: una casa oscura que no es un lugar — es una grabación en marcha. Siete habitaciones, una cámara que nunca deja de grabar, y un sitio entero escrito a mano en TypeScript, <em>sin framework y sin motor de juego</em>.",
+    "Não é só a frente. Por trás corre uma API em Express sobre PostgreSQL, com autenticação sem palavra-passe e testes de integração contra um banco verdadeiro. É o projeto mais complexo que já construí, e o que me ensinou a desconfiar de mim.":
+      "No es solo el frente. Detrás corre una API en Express sobre PostgreSQL, con autenticación sin contraseña y pruebas de integración contra una base real. Es el proyecto más complejo que he construido, y el que me enseñó a desconfiar de mí.",
+    "Salas na casa":
+      "Habitaciones en la casa",
+    "Fora do trabalho com dados, construo isto: uma casa escura que não é um lugar — é uma gravação a passar. Sem framework e sem motor de jogo, com uma API em Express sobre PostgreSQL por trás. É o projeto mais complexo que já construí, e o que me ensinou a desconfiar de mim.":
+      "Fuera del trabajo con datos, construyo esto: una casa oscura que no es un lugar — es una grabación en marcha. Sin framework ni motor de juego, con una API en Express sobre PostgreSQL detrás. <em>Es el proyecto más complejo que he construido, y el que me enseñó a desconfiar de mí.</em>",
+    "Entrar no PHOSPHOR":
+      "Entrar en PHOSPHOR",
+    "Ver a peça →":
+      "Ver la pieza →",
     "03 — O backend":
       "03 — El backend",
     "04 — Disciplina":

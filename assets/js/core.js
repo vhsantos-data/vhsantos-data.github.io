@@ -158,6 +158,7 @@
       { n: 'Home',                    k: 'página',  u: up + 'index.html' },
       { n: 'Sobre',                   k: 'página',  u: up + 'sobre.html' },
       { n: 'Projetos',                k: 'página',  u: up + 'projetos.html' },
+      { n: 'PHOSPHOR — peça autoral', k: 'página',  u: up + 'phosphor.html' },
       { n: 'Lab — snippets',          k: 'página',  u: up + 'lab.html' },
       { n: 'Contato',                 k: 'página',  u: up + 'contato.html' },
       { n: 'Case: falhas operacionais', k: 'case',  u: up + 'cases/falhas-operacionais.html' },
