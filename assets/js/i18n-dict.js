@@ -599,7 +599,283 @@ window.VH_I18N = {
     'causa': 'cause',
     'acao': 'action',
     '"rota inexistente"': '"route does not exist"',
-    '"voltar ao início"': '"back to home"'
+    '"voltar ao início"': '"back to home"',
+
+    /* ---------- CASE PHOSPHOR + HOME (peça autoral) ---------- */
+    "03 — Peça autoral":
+      "03 — Authored piece",
+    "04 — Projetos":
+      "04 — Projects",
+    "05 — Stack":
+      "05 — Stack",
+    "06 — Contato":
+      "06 — Contact",
+    "Em desenvolvimento":
+      "In development",
+    "Uma casa escura que não é um lugar — é uma gravação a passar. Sete salas, uma câmara que nunca para de gravar, e um site inteiro escrito à mão em TypeScript: sem framework e sem motor de jogo.":
+      "A dark house that is not a place — it is a recording playing. Seven rooms, a camera that never stops recording, and an entire site written by hand in TypeScript: <em>no framework and no game engine</em>.",
+    "É o projeto mais complexo que já construí, e o que me ensinou a desconfiar de mim — três vezes a medição contrariou o meu diagnóstico, e das três foi o diagnóstico que mudou.":
+      "It is the most complex project I have built, and the one that taught me to distrust myself — three times the measurement contradicted my diagnosis, and all three times it was the diagnosis that changed.",
+    "phosphor — verificações":
+      "phosphor — checks",
+    "testes":
+      "tests",
+    "415 passaram":
+      "415 passed",
+    "em 41 arquivos":
+      "across 41 files",
+    "0 avisos":
+      "0 warnings",
+    "→ teto é zero":
+      "→ ceiling is zero",
+    "tipos":
+      "types",
+    "estrito":
+      "strict",
+    "→ índice verificado":
+      "→ index checked",
+    "peso":
+      "weight",
+    "→ teto 350.0 KB":
+      "→ ceiling 350.0 KB",
+    "decisões":
+      "decisions",
+    "52 documentadas":
+      "52 documented",
+    "→ uma por escolha":
+      "→ one per choice",
+    "28 mil linhas de TypeScript":
+      "28 thousand lines of TypeScript",
+    "7 projetos":
+      "7 projects",
+    "Peça interativa em TypeScript puro — sem framework e sem motor de jogo. Uma casa escura que, na verdade, é uma gravação a passar. 28 mil linhas, 415 testes, 52 decisões documentadas e orçamento de peso que derruba o build quando é ultrapassado.":
+      "Interactive piece in pure TypeScript — no framework, no game engine. A dark house that is, in fact, a recording playing. 28 thousand lines, 415 tests, 52 documented decisions and a weight budget that fails the build when exceeded.",
+    "Peça autoral":
+      "Authored piece",
+    "Uma casa escura que não é um lugar — é uma gravação a passar. Sete salas, uma câmara que nunca para de gravar, e um site inteiro escrito à mão em TypeScript: sem framework, sem motor de jogo, sem biblioteca de interface.":
+      "A dark house that is not a place — it is a recording playing. Seven rooms, a camera that never stops recording, and an entire site written by hand in TypeScript: <em>no framework, no game engine, no UI library</em>.",
+    "Concepção, direção e desenvolvimento":
+      "Concept, direction and development",
+    "Natureza":
+      "Nature",
+    "Peça interativa · não comercial":
+      "Interactive piece · non-commercial",
+    "28 mil linhas · 7 salas":
+      "28 thousand lines · 7 rooms",
+    "Estado":
+      "Status",
+    "Em desenvolvimento ativo":
+      "In active development",
+
+    /* ---------- CASE PHOSPHOR · backend ---------- */
+    "03 — O backend":
+      "03 — The backend",
+    "04 — Disciplina":
+      "04 — Discipline",
+    "05 — Decisões técnicas":
+      "05 — Technical decisions",
+    "06 — O que quebrou no caminho":
+      "06 — What broke along the way",
+    "07 — Resultado":
+      "07 — Result",
+    "A casa tem uma API, e a API tem camadas.":
+      "The house has an API,<br>and the API has layers.",
+    "Por trás da casa corre um Express 4 em TypeScript estrito, organizado em quatro camadas que não se atravessam: rota → serviço → repositório → base de dados. A rota não sabe SQL. O repositório não sabe o que é um pedido HTTP. Entre elas passam DTOs validados com Zod, de modo que nenhum dado entra no sistema sem ter sido conferido na fronteira.":
+      "Behind the house runs an Express 4 API in strict TypeScript, organized into four layers that never cross: <em>route → service → repository → database</em>. The route knows no SQL. The repository knows nothing of an HTTP request. Between them travel DTOs validated with Zod, so that no data enters the system without being checked at the border.",
+    "A persistência é PostgreSQL com Drizzle — seis tabelas e seis migrações versionadas, aplicadas em ordem e guardadas no repositório como código. Não há alteração de esquema feita à mão numa consola de administração: se não está numa migração, não existe.":
+      "Persistence is PostgreSQL with Drizzle — six tables and six versioned migrations, applied in order and kept in the repository as code. There is no schema change made by hand in an admin console: if it is not in a migration, it does not exist.",
+    "A autenticação não tem palavra-passe. Quem quer deixar rasto recebe uma ligação por email que vale uma vez e expira; o que fica guardado é um resumo em Argon2, nunca o segredo. A sessão vive no Postgres, e cada tentativa — conseguida ou falhada — deixa registo numa tabela própria de eventos.":
+      "Authentication has no password. Whoever wants to leave a trace gets an email link that works once and expires; what is stored is an Argon2 hash, never the secret. The session lives in Postgres, and every attempt — successful or failed — is recorded in its own events table.",
+    "o caminho de um pedido":
+      "the path of a request",
+    "→ cada pedido ganha nome":
+      "→ every request gets a name",
+    "→ lista fechada de origens":
+      "→ closed origin allowlist",
+    "→ teto por IP":
+      "→ ceiling per IP",
+    "→ sessão ou 401":
+      "→ session or 401",
+    "rota → serviço → repositório":
+      "route → service → repository",
+    "→ nunca vaza stack":
+      "→ never leaks a stack trace",
+    "log estruturado em JSON, sempre":
+      "structured JSON logging, always",
+    "esquema — 6 tabelas":
+      "schema — 6 tables",
+    "→ quem deixou rasto":
+      "→ whoever left a trace",
+    "→ sessão persistida em Postgres":
+      "→ session persisted in Postgres",
+    "→ resumo Argon2, uso único":
+      "→ Argon2 hash, single use",
+    "→ trilho de auditoria":
+      "→ audit trail",
+    "→ o que foi dito às fitas":
+      "→ what was said to the tapes",
+    "→ herança da versão anterior":
+      "→ inherited from the previous version",
+    "6 migrações versionadas":
+      "6 versioned migrations",
+    "Testes":
+      "Tests",
+    "Postgres a sério, não imitado":
+      "Real Postgres, not a mock",
+    "Os testes de integração sobem um PostgreSQL verdadeiro num contentor, com Testcontainers, e correm contra ele. Um repositório testado contra uma imitação prova que a imitação funciona — não que o SQL funciona.":
+      "The integration tests spin up a real PostgreSQL in a container, with Testcontainers, and run against it. A repository tested against a mock proves the mock works — not that the SQL works.",
+    "Segurança":
+      "Security",
+    "A borda é fechada por omissão":
+      "The edge is closed by default",
+    "Helmet nos cabeçalhos, CORS por lista fechada, limite de pedidos por IP, e um tratador de erros que devolve mensagem útil sem nunca deixar sair o rasto da pilha. São dez middlewares, todos testados.":
+      "Helmet on the headers, CORS by closed allowlist, a request ceiling per IP, and an error handler that returns a useful message without ever letting the stack trace out. Ten middlewares, all tested.",
+    "Pino em JSON estruturado, com o identificador do pedido a atravessar todas as camadas. Quando alguma coisa parte às três da manhã, o log é a única coisa que existe.":
+      "Pino in structured JSON, with the request identifier crossing every layer. When something breaks at three in the morning, the log is the only thing there is.",
+    ".github/workflows/ci.yml — os cinco portões":
+      ".github/workflows/ci.yml — the five gates",
+    "37 mil linhas · 7 salas":
+      "37 thousand lines · 7 rooms",
+    "37 mil linhas de TypeScript":
+      "37 thousand lines of TypeScript",
+    "1 117 escritos":
+      "1,117 written",
+    "→ 415 na interface, 702 na API":
+      "→ 415 in the interface, 702 in the API",
+    "base":
+      "database",
+    "→ 6 tabelas · 6 migrações":
+      "→ 6 tables · 6 migrations",
+    "1 117 testes ao todo — 415 na interface e 702 na API, destes 225 contra um PostgreSQL verdadeiro. Toda lógica que não toca no DOM é testada.":
+      "1,117 tests in total — 415 in the interface and 702 in the API, 225 of those against a real PostgreSQL. All logic that does not touch the DOM is tested.",
+    "Não é só frente: por trás corre uma API em Express sobre PostgreSQL, com autenticação sem palavra-passe e testes de integração contra um banco verdadeiro. É o projeto mais complexo que já construí, e o que me ensinou a desconfiar de mim — três vezes a medição contrariou o meu diagnóstico, e das três foi o diagnóstico que mudou.":
+      "It is not only the front: behind it runs an Express API over PostgreSQL, with passwordless authentication and integration tests against a real database. It is the most complex project I have built, and the one that taught me to distrust myself — three times the measurement contradicted my diagnosis, and all three times it was the diagnosis that changed.",
+    "Peça interativa em TypeScript puro — sem framework e sem motor de jogo, com API em Express sobre PostgreSQL por trás. 37 mil linhas, 1 117 testes, 6 migrações versionadas, 52 decisões documentadas e orçamento de peso que derruba o build quando é ultrapassado.":
+      "Interactive piece in pure TypeScript — no framework, no game engine, with an Express API over PostgreSQL behind it. 37 thousand lines, 1,117 tests, 6 versioned migrations, 52 documented decisions and a weight budget that fails the build when exceeded.",
+    "01 — A premissa":
+      "01 — The premise",
+    "Sem framework. Sem motor de jogo.":
+      "No framework.<br>No game engine.",
+    "A casa não é um lugar. É uma fita a passar.":
+      "The house is not a place.<br>It is a tape playing.",
+    "Quem entra encontra uma casa escura, filmada por uma câmara que ficou ligada no canto do cômodo e nunca mais foi desligada. As salas não levam a lado nenhum: são entradas, e guardam o que entrou. Um som que continua depois de a última pessoa sair. Uma janela virada para o lado errado de si mesma.":
+      "Whoever enters finds a dark house, filmed by a camera left on in the corner of the room and never switched off again. The rooms lead nowhere: they are entrances, and they keep what entered. A sound that goes on after the last person leaves. A window facing the wrong side of itself.",
+    "A decisão que organiza tudo o resto é esta: a casa é uma gravação num aparelho que se gasta. Isso nunca aparece escrito em lado nenhum da peça — é uma regra de autoria, não um texto. Quando uma decisão tem duas leituras possíveis, ganha sempre a que se explica por \"isto é uma fita a passar\".":
+      "The decision that organizes everything else is this: <em>the house is a recording on a device that wears out</em>. This never appears written anywhere in the piece — it is a rule of authorship, not a text. When a decision has two possible readings, the one explained by \"this is a tape playing\" always wins.",
+    "A consequência prática é que a casa erra de propósito, e erra como uma fita erra: o que ela disse desgasta-se com o uso, as salas deixam escapar umas para as outras, e a imagem só resolve onde se está a olhar. Nada disso é anunciado. Quem reparar, reparou.":
+      "The practical consequence is that the house errs on purpose, and errs the way a tape errs: what it said wears out with use, the rooms leak into one another, and the image only resolves where you are looking. None of it is announced. Whoever notices, noticed.",
+    "O que a casa recusa":
+      "What the house refuses",
+    "Tutorial, dica, seta a apontar o caminho":
+      "Tutorial, hint, arrow pointing the way",
+    "Pontuação, conquista, barra de progresso":
+      "Score, achievement, progress bar",
+    "Texto que explica o que o jogador devia estar a sentir":
+      "Text explaining what the player should be feeling",
+    "Qualquer coisa que peça dinheiro ou dados sem necessidade":
+      "Anything asking for money or data without need",
+    "O que a casa faz":
+      "What the house does",
+    "Responde a quem olha, e ignora quem passa":
+      "Answers whoever looks, ignores whoever passes",
+    "Lembra-se do que foi feito, e degrada essa lembrança":
+      "Remembers what was done, and degrades that memory",
+    "Continua a soar depois de a sala ficar vazia":
+      "Goes on sounding after the room is empty",
+    "Funciona inteira sem JavaScript, como ruína":
+      "Works entirely without JavaScript, as a ruin",
+    "Não há React, não há Phaser, não há Three.js. A casa é DOM, SVG e CSS, movida por TypeScript em modo estrito. A escolha não foi teimosia: é o que permite caber no orçamento de peso e manter o controlo sobre cada quadro.":
+      "There is no React, no Phaser, no Three.js. The house is DOM, SVG and CSS, driven by TypeScript in strict mode. The choice was not stubbornness: <em>it is what makes the weight budget possible</em> and keeps control over every frame.",
+    "O monorepo tem três pacotes — a interface, uma API em Express com PostgreSQL, e os tipos partilhados entre as duas. Cada sala é um pedaço de código que só é descarregado quando alguém abre aquela porta.":
+      "The monorepo has three packages — the interface, an Express API with PostgreSQL, and the types shared between them. Each room is a chunk of code downloaded only when someone opens that door.",
+    "estrutura":
+      "structure",
+    "→ SPA em TypeScript puro":
+      "→ SPA in pure TypeScript",
+    "→ Express 4 · Drizzle · Zod":
+      "→ Express 4 · Drizzle · Zod",
+    "→ tipos e schemas":
+      "→ types and schemas",
+    "→ 52 decisões escritas":
+      "→ 52 written decisions",
+    "7 salas · 67 sons":
+      "7 rooms · 67 sounds",
+    "03 — Disciplina":
+      "03 — Discipline",
+    "O que impede o projeto de apodrecer.":
+      "What keeps the project<br>from rotting.",
+    "Um projeto pessoal de três meses normalmente morre de dívida. Este tem quatro travões, e todos eles derrubam o build quando são desrespeitados — não é convenção, é falha de integração contínua.":
+      "A three-month personal project usually dies of debt. This one has four brakes, and every one of them fails the build when broken — it is not convention, it is a continuous-integration failure.",
+    "check-budgets.mjs — saída real":
+      "check-budgets.mjs — real output",
+    "Orçamento de peso":
+      "Weight budget",
+    "Cada categoria tem um teto em KB comprimido. O site inteiro pinta com 225 KB contra um limite de 350.":
+      "Each category has a ceiling in gzipped KB. The whole site paints with 225 KB against a limit of 350.",
+    "Testes antes da correção":
+      "Tests before the fix",
+    "415 testes em 41 arquivos no frontend, mais 35 arquivos no backend. Toda lógica que não toca no DOM é testável e é testada.":
+      "415 tests across 41 files on the frontend, plus 35 files on the backend. All logic that does not touch the DOM is testable and is tested.",
+    "Zero aviso tolerado":
+      "Zero warnings tolerated",
+    "TypeScript estrito com verificação de índice, ESLint com regras de segurança, e o build falha no primeiro aviso.":
+      "Strict TypeScript with index checking, ESLint with security rules, and the build fails on the first warning.",
+    "Decisão vira documento":
+      "A decision becomes a document",
+    "52 registros de decisão arquitetural. Cada um diz o que foi decidido, por quê, e o que se perdeu ao decidir assim.":
+      "52 architectural decision records. Each says what was decided, why, and what was lost by deciding that way.",
+    "TypeScript puro em vez de framework":
+      "Pure TypeScript instead of a framework",
+    "React resolveria a reatividade e custaria o orçamento inteiro de peso antes da primeira sala existir. Sem framework, cada componente é uma função que devolve um elemento e uma função que o desmonta. Mais código escrito à mão, muito menos código enviado.":
+      "React would solve reactivity and cost the entire weight budget before the first room existed. Without a framework, each component is a function returning an element and a function unmounting it. More code written by hand, far less code shipped.",
+    "Cada sala é um pedaço próprio":
+      "Each room is its own chunk",
+    "As salas são importadas só quando alguém abre aquela porta. Quem nunca entra na sala de estar nunca descarrega os 32 KB dela. O menu e o manifesto viajam com o núcleo, para que um pedaço em falta depois de um deploy nunca transforme a casa em nada.":
+      "Rooms are imported only when someone opens that door. Whoever never enters the living room never downloads its 32 KB. The menu and the manifest travel with the core, so that a missing chunk after a deploy can never turn the house into nothing.",
+    "O site funciona sem JavaScript":
+      "The site works without JavaScript",
+    "E não como degradação: o estado sem script é um estado desenhado — a casa depois de todo o movimento parar, com a câmara congelada em 00:00:00. Quem tem script desligado não vê um aviso, vê a ruína.":
+      "And not as degradation: the scriptless state is a designed state — the house after all motion has stopped, with the camera frozen at 00:00:00. Whoever has scripts off does not see a warning, they see the ruin.",
+    "Movimento reduzido é obedecido antes do primeiro quadro":
+      "Reduced motion is obeyed before the first frame",
+    "A preferência de sistema é lida e aplicada no documento antes de a primeira camada nascer. Uma casa que aparecesse com o movimento cheio e o baixasse a seguir estaria a desobedecer durante um quadro — e um quadro chega para enjoar alguém.":
+      "The system preference is read and applied to the document before the first layer is born. A house that appeared at full motion and lowered it afterwards would be disobeying for one frame — and one frame is enough to make someone sick.",
+    "Medir, e deixar a medição mandar.":
+      "Measure, and let the<br>measurement decide.",
+    "O escuro engana o olho. Duas vezes num só dia, o que parecia \"verde brilhante\" media rgb(20, 22, 8) quando fui amostrar o pixel. A regra que saiu daí vale para o projeto inteiro: reproduzir no navegador, medir, corrigir, e medir outra vez.":
+      "The dark deceives the eye. Twice in a single day, what looked like \"bright green\" measured <code>rgb(20, 22, 8)</code> when I sampled the pixel. The rule that came out of it holds for the whole project: reproduce in the browser, measure, fix, and measure again.",
+    "A cascata comia o desenho das salas. Uma folha de estilo de componentes reescrevia largura, cor e espaçamento de salas que já tinham desenho próprio. Descobri isso a comparar valores computados, não a olhar. A correção não foi ajustar os números — foi tirar daquele arquivo toda a autoridade sobre aparência e deixá-lo só com comportamento.":
+      "<strong>The cascade was eating the rooms’ design.</strong> A component stylesheet was rewriting width, colour and spacing of rooms that already had their own design. I found it by comparing computed values, not by looking. The fix was not adjusting the numbers — it was stripping that file of all authority over appearance and leaving it only with behaviour.",
+    "Passei um dia a otimizar o pacote errado. O servidor de pré-visualização serve a pasta compilada, e eu media depois de editar a fonte sem recompilar. Estava a medir o programa anterior, e a conclusão inteira foi para o lixo.":
+      "<strong>I spent a day optimizing the wrong bundle.</strong> The preview server serves the compiled folder, and I was measuring after editing the source without rebuilding. I was measuring the previous program, and the whole conclusion went in the bin.",
+    "Ia cortar uma funcionalidade por um número que eu próprio inventei. Medi que uma camada nova custava 84 ms de processador por segundo e decidi removê-la. Faltava o controlo: medir o mesmo movimento de rato sem a camada. Quando o fiz, a camada custava entre zero e oito. Os oitenta eram o preço de mexer o rato. A funcionalidade ficou.":
+      "<strong>I nearly cut a feature over a number I had invented myself.</strong> I measured a new layer costing 84 ms of processor per second and decided to remove it. The control was missing: measuring the same mouse movement <em>without</em> the layer. When I did, the layer cost between zero and eight. The eighty was the price of moving the mouse. The feature stayed.",
+    "O resultado desse método está nos números: o corredor passou de 132 para 58 milissegundos de processador por segundo, e o tempo de cálculo de layout caiu de uma faixa de 5 a 12 para menos de 5. E ficou provado que não há fuga de memória — 42 navegações com coleta de lixo forçada movem a contagem de nós de 1055 para 1082.":
+      "The result of this method is in the numbers: the corridor went from 132 to 58 milliseconds of processor per second, and layout calculation time fell from a 5-to-12 range to under 5. And it was proven there is no memory leak — 42 navigations with forced garbage collection move the node count from 1055 to 1082.",
+    "Commits em 3 meses":
+      "Commits in 3 months",
+    "Testes automatizados":
+      "Automated tests",
+    "Decisões documentadas":
+      "Documented decisions",
+    "Peso do primeiro paint":
+      "First-paint weight",
+    "O que isto provou.":
+      "What this proved.",
+    "PHOSPHOR ainda não acabou, e o final é a única parte que continua por escrever — de propósito. Mas o que já está de pé responde à pergunta que eu queria responder: dá para construir uma coisa grande sem framework e sem deixar a qualidade escorregar?":
+      "PHOSPHOR is not finished, and the ending is the one part still unwritten — on purpose. But what already stands answers the question I wanted to answer: <em>can you build something large without a framework and without letting quality slip?</em>",
+    "Dá, com a condição de a régua ser automática. Orçamento que derruba o build, teste que corre antes do commit, e decisão que vira documento no dia em que é tomada. Sem isso, três meses de projeto pessoal viram três meses de dívida.":
+      "You can, on the condition that the ruler is automatic. A budget that fails the build, a test that runs before the commit, and a decision that becomes a document the day it is made. Without that, three months of a personal project become three months of debt.",
+    "É também o projeto onde aprendi a desconfiar de mim. Três vezes a medição contrariou o meu diagnóstico, e das três foi o diagnóstico que mudou. Isso transferiu-se inteiro para o trabalho com dados: número que não foi medido contra um controlo não é número, é opinião com casas decimais.":
+      "It is also the project where I learned to distrust myself. Three times the measurement contradicted my diagnosis, and all three times it was the diagnosis that changed. That transferred whole into data work: a number not measured against a control is not a number, it is an opinion with decimal places.",
+    "O escuro engana o olho. Por isso eu meço antes de ter certeza.":
+      "The dark deceives the eye.<br>That is why I measure before I am sure.",
+    "Quer ver o resto?":
+      "Want to see the rest?",
+    "O PHOSPHOR corre no endereço dele, inteiro e sem explicação — é assim que ele foi feito para ser encontrado. Os outros projetos ficam na lista.":
+      "PHOSPHOR runs at its own address, whole and without explanation — that is how it was made to be found. The other projects are in the list.",
+    "Entrar na casa":
+      "Enter the house"
   },
 
   /* ========================================================
@@ -1291,7 +1567,283 @@ window.VH_I18N = {
     'causa': 'causa',
     'acao': 'accion',
     '"rota inexistente"': '"ruta inexistente"',
-    '"voltar ao início"': '"volver al inicio"'
+    '"voltar ao início"': '"volver al inicio"',
+    /* ---------- CASE PHOSPHOR + HOME (peça autoral) ---------- */
+    "03 — Peça autoral":
+      "03 — Pieza de autor",
+    "04 — Projetos":
+      "04 — Proyectos",
+    "05 — Stack":
+      "05 — Stack",
+    "06 — Contato":
+      "06 — Contacto",
+    "Em desenvolvimento":
+      "En desarrollo",
+    "Uma casa escura que não é um lugar — é uma gravação a passar. Sete salas, uma câmara que nunca para de gravar, e um site inteiro escrito à mão em TypeScript: sem framework e sem motor de jogo.":
+      "Una casa oscura que no es un lugar — es una grabación en marcha. Siete habitaciones, una cámara que nunca deja de grabar, y un sitio entero escrito a mano en TypeScript: <em>sin framework y sin motor de juego</em>.",
+    "É o projeto mais complexo que já construí, e o que me ensinou a desconfiar de mim — três vezes a medição contrariou o meu diagnóstico, e das três foi o diagnóstico que mudou.":
+      "Es el proyecto más complejo que he construido, y el que me enseñó a desconfiar de mí — tres veces la medición contradijo mi diagnóstico, y las tres veces fue el diagnóstico el que cambió.",
+    "phosphor — verificações":
+      "phosphor — verificaciones",
+    "testes":
+      "pruebas",
+    "415 passaram":
+      "415 pasaron",
+    "em 41 arquivos":
+      "en 41 archivos",
+    "0 avisos":
+      "0 avisos",
+    "→ teto é zero":
+      "→ el techo es cero",
+    "tipos":
+      "tipos",
+    "estrito":
+      "estricto",
+    "→ índice verificado":
+      "→ índice verificado",
+    "peso":
+      "peso",
+    "→ teto 350.0 KB":
+      "→ techo 350.0 KB",
+    "decisões":
+      "decisiones",
+    "52 documentadas":
+      "52 documentadas",
+    "→ uma por escolha":
+      "→ una por elección",
+    "28 mil linhas de TypeScript":
+      "28 mil líneas de TypeScript",
+    "7 projetos":
+      "7 proyectos",
+    "Peça interativa em TypeScript puro — sem framework e sem motor de jogo. Uma casa escura que, na verdade, é uma gravação a passar. 28 mil linhas, 415 testes, 52 decisões documentadas e orçamento de peso que derruba o build quando é ultrapassado.":
+      "Pieza interactiva en TypeScript puro — sin framework ni motor de juego. Una casa oscura que es, en realidad, una grabación en marcha. 28 mil líneas, 415 pruebas, 52 decisiones documentadas y un presupuesto de peso que tumba el build cuando se supera.",
+    "Peça autoral":
+      "Pieza de autor",
+    "Uma casa escura que não é um lugar — é uma gravação a passar. Sete salas, uma câmara que nunca para de gravar, e um site inteiro escrito à mão em TypeScript: sem framework, sem motor de jogo, sem biblioteca de interface.":
+      "Una casa oscura que no es un lugar — es una grabación en marcha. Siete habitaciones, una cámara que nunca deja de grabar, y un sitio entero escrito a mano en TypeScript: <em>sin framework, sin motor de juego, sin librería de interfaz</em>.",
+    "Concepção, direção e desenvolvimento":
+      "Concepción, dirección y desarrollo",
+    "Natureza":
+      "Naturaleza",
+    "Peça interativa · não comercial":
+      "Pieza interactiva · no comercial",
+    "28 mil linhas · 7 salas":
+      "28 mil líneas · 7 habitaciones",
+    "Estado":
+      "Estado",
+    "Em desenvolvimento ativo":
+      "En desarrollo activo",
+
+    /* ---------- CASE PHOSPHOR · backend ---------- */
+    "03 — O backend":
+      "03 — El backend",
+    "04 — Disciplina":
+      "04 — Disciplina",
+    "05 — Decisões técnicas":
+      "05 — Decisiones técnicas",
+    "06 — O que quebrou no caminho":
+      "06 — Lo que se rompió en el camino",
+    "07 — Resultado":
+      "07 — Resultado",
+    "A casa tem uma API, e a API tem camadas.":
+      "La casa tiene una API,<br>y la API tiene capas.",
+    "Por trás da casa corre um Express 4 em TypeScript estrito, organizado em quatro camadas que não se atravessam: rota → serviço → repositório → base de dados. A rota não sabe SQL. O repositório não sabe o que é um pedido HTTP. Entre elas passam DTOs validados com Zod, de modo que nenhum dado entra no sistema sem ter sido conferido na fronteira.":
+      "Detrás de la casa corre un Express 4 en TypeScript estricto, organizado en cuatro capas que no se cruzan: <em>ruta → servicio → repositorio → base de datos</em>. La ruta no sabe SQL. El repositorio no sabe qué es una petición HTTP. Entre ellas viajan DTOs validados con Zod, de modo que ningún dato entra al sistema sin ser verificado en la frontera.",
+    "A persistência é PostgreSQL com Drizzle — seis tabelas e seis migrações versionadas, aplicadas em ordem e guardadas no repositório como código. Não há alteração de esquema feita à mão numa consola de administração: se não está numa migração, não existe.":
+      "La persistencia es PostgreSQL con Drizzle — seis tablas y seis migraciones versionadas, aplicadas en orden y guardadas en el repositorio como código. No hay cambio de esquema hecho a mano en una consola de administración: si no está en una migración, no existe.",
+    "A autenticação não tem palavra-passe. Quem quer deixar rasto recebe uma ligação por email que vale uma vez e expira; o que fica guardado é um resumo em Argon2, nunca o segredo. A sessão vive no Postgres, e cada tentativa — conseguida ou falhada — deixa registo numa tabela própria de eventos.":
+      "La autenticación no tiene contraseña. Quien quiere dejar rastro recibe un enlace por email que vale una vez y caduca; lo que se guarda es un hash en Argon2, nunca el secreto. La sesión vive en Postgres, y cada intento — logrado o fallido — queda registrado en su propia tabla de eventos.",
+    "o caminho de um pedido":
+      "el camino de una petición",
+    "→ cada pedido ganha nome":
+      "→ cada petición recibe un nombre",
+    "→ lista fechada de origens":
+      "→ lista cerrada de orígenes",
+    "→ teto por IP":
+      "→ techo por IP",
+    "→ sessão ou 401":
+      "→ sesión o 401",
+    "rota → serviço → repositório":
+      "ruta → servicio → repositorio",
+    "→ nunca vaza stack":
+      "→ nunca filtra el stack",
+    "log estruturado em JSON, sempre":
+      "log estructurado en JSON, siempre",
+    "esquema — 6 tabelas":
+      "esquema — 6 tablas",
+    "→ quem deixou rasto":
+      "→ quien dejó rastro",
+    "→ sessão persistida em Postgres":
+      "→ sesión persistida en Postgres",
+    "→ resumo Argon2, uso único":
+      "→ hash Argon2, un solo uso",
+    "→ trilho de auditoria":
+      "→ rastro de auditoría",
+    "→ o que foi dito às fitas":
+      "→ lo que se dijo a las cintas",
+    "→ herança da versão anterior":
+      "→ herencia de la versión anterior",
+    "6 migrações versionadas":
+      "6 migraciones versionadas",
+    "Testes":
+      "Pruebas",
+    "Postgres a sério, não imitado":
+      "Postgres de verdad, no imitado",
+    "Os testes de integração sobem um PostgreSQL verdadeiro num contentor, com Testcontainers, e correm contra ele. Um repositório testado contra uma imitação prova que a imitação funciona — não que o SQL funciona.":
+      "Las pruebas de integración levantan un PostgreSQL real en un contenedor, con Testcontainers, y corren contra él. Un repositorio testeado contra un mock prueba que el mock funciona — no que el SQL funciona.",
+    "Segurança":
+      "Seguridad",
+    "A borda é fechada por omissão":
+      "El borde está cerrado por defecto",
+    "Helmet nos cabeçalhos, CORS por lista fechada, limite de pedidos por IP, e um tratador de erros que devolve mensagem útil sem nunca deixar sair o rasto da pilha. São dez middlewares, todos testados.":
+      "Helmet en las cabeceras, CORS por lista cerrada, límite de peticiones por IP, y un manejador de errores que devuelve un mensaje útil sin dejar salir nunca el stack. Son diez middlewares, todos testeados.",
+    "Pino em JSON estruturado, com o identificador do pedido a atravessar todas as camadas. Quando alguma coisa parte às três da manhã, o log é a única coisa que existe.":
+      "Pino en JSON estructurado, con el identificador de la petición atravesando todas las capas. Cuando algo se rompe a las tres de la mañana, el log es lo único que existe.",
+    ".github/workflows/ci.yml — os cinco portões":
+      ".github/workflows/ci.yml — las cinco puertas",
+    "37 mil linhas · 7 salas":
+      "37 mil líneas · 7 habitaciones",
+    "37 mil linhas de TypeScript":
+      "37 mil líneas de TypeScript",
+    "1 117 escritos":
+      "1.117 escritas",
+    "→ 415 na interface, 702 na API":
+      "→ 415 en la interfaz, 702 en la API",
+    "base":
+      "base",
+    "→ 6 tabelas · 6 migrações":
+      "→ 6 tablas · 6 migraciones",
+    "1 117 testes ao todo — 415 na interface e 702 na API, destes 225 contra um PostgreSQL verdadeiro. Toda lógica que não toca no DOM é testada.":
+      "1.117 pruebas en total — 415 en la interfaz y 702 en la API, 225 de ellas contra un PostgreSQL real. Toda lógica que no toca el DOM está testeada.",
+    "Não é só frente: por trás corre uma API em Express sobre PostgreSQL, com autenticação sem palavra-passe e testes de integração contra um banco verdadeiro. É o projeto mais complexo que já construí, e o que me ensinou a desconfiar de mim — três vezes a medição contrariou o meu diagnóstico, e das três foi o diagnóstico que mudou.":
+      "No es solo el frente: detrás corre una API en Express sobre PostgreSQL, con autenticación sin contraseña y pruebas de integración contra una base real. Es el proyecto más complejo que he construido, y el que me enseñó a desconfiar de mí — tres veces la medición contradijo mi diagnóstico, y las tres veces fue el diagnóstico el que cambió.",
+    "Peça interativa em TypeScript puro — sem framework e sem motor de jogo, com API em Express sobre PostgreSQL por trás. 37 mil linhas, 1 117 testes, 6 migrações versionadas, 52 decisões documentadas e orçamento de peso que derruba o build quando é ultrapassado.":
+      "Pieza interactiva en TypeScript puro — sin framework ni motor de juego, con una API en Express sobre PostgreSQL detrás. 37 mil líneas, 1.117 pruebas, 6 migraciones versionadas, 52 decisiones documentadas y un presupuesto de peso que tumba el build cuando se supera.",
+    "01 — A premissa":
+      "01 — La premisa",
+    "Sem framework. Sem motor de jogo.":
+      "Sin framework.<br>Sin motor de juego.",
+    "A casa não é um lugar. É uma fita a passar.":
+      "La casa no es un lugar.<br>Es una cinta en marcha.",
+    "Quem entra encontra uma casa escura, filmada por uma câmara que ficou ligada no canto do cômodo e nunca mais foi desligada. As salas não levam a lado nenhum: são entradas, e guardam o que entrou. Um som que continua depois de a última pessoa sair. Uma janela virada para o lado errado de si mesma.":
+      "Quien entra encuentra una casa oscura, filmada por una cámara que quedó encendida en la esquina de la habitación y nunca se apagó. Las habitaciones no llevan a ninguna parte: son entradas, y guardan lo que entró. Un sonido que sigue después de que la última persona se va. Una ventana orientada hacia el lado equivocado de sí misma.",
+    "A decisão que organiza tudo o resto é esta: a casa é uma gravação num aparelho que se gasta. Isso nunca aparece escrito em lado nenhum da peça — é uma regra de autoria, não um texto. Quando uma decisão tem duas leituras possíveis, ganha sempre a que se explica por \"isto é uma fita a passar\".":
+      "La decisión que organiza todo lo demás es esta: <em>la casa es una grabación en un aparato que se desgasta</em>. Eso nunca aparece escrito en ninguna parte de la pieza — es una regla de autoría, no un texto. Cuando una decisión tiene dos lecturas posibles, siempre gana la que se explica por \"esto es una cinta en marcha\".",
+    "A consequência prática é que a casa erra de propósito, e erra como uma fita erra: o que ela disse desgasta-se com o uso, as salas deixam escapar umas para as outras, e a imagem só resolve onde se está a olhar. Nada disso é anunciado. Quem reparar, reparou.":
+      "La consecuencia práctica es que la casa se equivoca a propósito, y se equivoca como se equivoca una cinta: lo que dijo se desgasta con el uso, las habitaciones se filtran unas en otras, y la imagen solo se resuelve donde se está mirando. Nada de eso se anuncia. Quien lo note, lo notó.",
+    "O que a casa recusa":
+      "Lo que la casa rechaza",
+    "Tutorial, dica, seta a apontar o caminho":
+      "Tutorial, pista, flecha señalando el camino",
+    "Pontuação, conquista, barra de progresso":
+      "Puntuación, logro, barra de progreso",
+    "Texto que explica o que o jogador devia estar a sentir":
+      "Texto que explica lo que el jugador debería estar sintiendo",
+    "Qualquer coisa que peça dinheiro ou dados sem necessidade":
+      "Cualquier cosa que pida dinero o datos sin necesidad",
+    "O que a casa faz":
+      "Lo que la casa hace",
+    "Responde a quem olha, e ignora quem passa":
+      "Responde a quien mira, e ignora a quien pasa",
+    "Lembra-se do que foi feito, e degrada essa lembrança":
+      "Recuerda lo que se hizo, y degrada ese recuerdo",
+    "Continua a soar depois de a sala ficar vazia":
+      "Sigue sonando después de que la habitación queda vacía",
+    "Funciona inteira sem JavaScript, como ruína":
+      "Funciona entera sin JavaScript, como ruina",
+    "Não há React, não há Phaser, não há Three.js. A casa é DOM, SVG e CSS, movida por TypeScript em modo estrito. A escolha não foi teimosia: é o que permite caber no orçamento de peso e manter o controlo sobre cada quadro.":
+      "No hay React, no hay Phaser, no hay Three.js. La casa es DOM, SVG y CSS, movida por TypeScript en modo estricto. La elección no fue terquedad: <em>es lo que permite caber en el presupuesto de peso</em> y mantener el control sobre cada fotograma.",
+    "O monorepo tem três pacotes — a interface, uma API em Express com PostgreSQL, e os tipos partilhados entre as duas. Cada sala é um pedaço de código que só é descarregado quando alguém abre aquela porta.":
+      "El monorepo tiene tres paquetes — la interfaz, una API en Express con PostgreSQL, y los tipos compartidos entre ambas. Cada habitación es un fragmento de código que solo se descarga cuando alguien abre esa puerta.",
+    "estrutura":
+      "estructura",
+    "→ SPA em TypeScript puro":
+      "→ SPA en TypeScript puro",
+    "→ Express 4 · Drizzle · Zod":
+      "→ Express 4 · Drizzle · Zod",
+    "→ tipos e schemas":
+      "→ tipos y schemas",
+    "→ 52 decisões escritas":
+      "→ 52 decisiones escritas",
+    "7 salas · 67 sons":
+      "7 habitaciones · 67 sonidos",
+    "03 — Disciplina":
+      "03 — Disciplina",
+    "O que impede o projeto de apodrecer.":
+      "Lo que impide que el proyecto<br>se pudra.",
+    "Um projeto pessoal de três meses normalmente morre de dívida. Este tem quatro travões, e todos eles derrubam o build quando são desrespeitados — não é convenção, é falha de integração contínua.":
+      "Un proyecto personal de tres meses normalmente muere de deuda. Este tiene cuatro frenos, y todos tumban el build cuando se incumplen — no es convención, es fallo de integración continua.",
+    "check-budgets.mjs — saída real":
+      "check-budgets.mjs — salida real",
+    "Orçamento de peso":
+      "Presupuesto de peso",
+    "Cada categoria tem um teto em KB comprimido. O site inteiro pinta com 225 KB contra um limite de 350.":
+      "Cada categoría tiene un techo en KB comprimido. El sitio entero pinta con 225 KB frente a un límite de 350.",
+    "Testes antes da correção":
+      "Pruebas antes de la corrección",
+    "415 testes em 41 arquivos no frontend, mais 35 arquivos no backend. Toda lógica que não toca no DOM é testável e é testada.":
+      "415 pruebas en 41 archivos en el frontend, más 35 archivos en el backend. Toda lógica que no toca el DOM es testeable y está testeada.",
+    "Zero aviso tolerado":
+      "Cero avisos tolerados",
+    "TypeScript estrito com verificação de índice, ESLint com regras de segurança, e o build falha no primeiro aviso.":
+      "TypeScript estricto con verificación de índice, ESLint con reglas de seguridad, y el build falla en el primer aviso.",
+    "Decisão vira documento":
+      "La decisión se vuelve documento",
+    "52 registros de decisão arquitetural. Cada um diz o que foi decidido, por quê, e o que se perdeu ao decidir assim.":
+      "52 registros de decisión arquitectónica. Cada uno dice qué se decidió, por qué, y qué se perdió al decidirlo así.",
+    "TypeScript puro em vez de framework":
+      "TypeScript puro en vez de framework",
+    "React resolveria a reatividade e custaria o orçamento inteiro de peso antes da primeira sala existir. Sem framework, cada componente é uma função que devolve um elemento e uma função que o desmonta. Mais código escrito à mão, muito menos código enviado.":
+      "React resolvería la reactividad y costaría el presupuesto de peso entero antes de que existiera la primera habitación. Sin framework, cada componente es una función que devuelve un elemento y una función que lo desmonta. Más código escrito a mano, mucho menos código enviado.",
+    "Cada sala é um pedaço próprio":
+      "Cada habitación es su propio fragmento",
+    "As salas são importadas só quando alguém abre aquela porta. Quem nunca entra na sala de estar nunca descarrega os 32 KB dela. O menu e o manifesto viajam com o núcleo, para que um pedaço em falta depois de um deploy nunca transforme a casa em nada.":
+      "Las habitaciones se importan solo cuando alguien abre esa puerta. Quien nunca entra en la sala de estar nunca descarga sus 32 KB. El menú y el manifiesto viajan con el núcleo, para que un fragmento ausente tras un deploy nunca convierta la casa en nada.",
+    "O site funciona sem JavaScript":
+      "El sitio funciona sin JavaScript",
+    "E não como degradação: o estado sem script é um estado desenhado — a casa depois de todo o movimento parar, com a câmara congelada em 00:00:00. Quem tem script desligado não vê um aviso, vê a ruína.":
+      "Y no como degradación: el estado sin script es un estado diseñado — la casa después de que todo el movimiento se detiene, con la cámara congelada en 00:00:00. Quien tiene los scripts apagados no ve un aviso, ve la ruina.",
+    "Movimento reduzido é obedecido antes do primeiro quadro":
+      "El movimiento reducido se obedece antes del primer fotograma",
+    "A preferência de sistema é lida e aplicada no documento antes de a primeira camada nascer. Uma casa que aparecesse com o movimento cheio e o baixasse a seguir estaria a desobedecer durante um quadro — e um quadro chega para enjoar alguém.":
+      "La preferencia del sistema se lee y se aplica al documento antes de que nazca la primera capa. Una casa que apareciera con el movimiento completo y lo bajara después estaría desobedeciendo durante un fotograma — y un fotograma basta para marear a alguien.",
+    "Medir, e deixar a medição mandar.":
+      "Medir, y dejar que la<br>medición mande.",
+    "O escuro engana o olho. Duas vezes num só dia, o que parecia \"verde brilhante\" media rgb(20, 22, 8) quando fui amostrar o pixel. A regra que saiu daí vale para o projeto inteiro: reproduzir no navegador, medir, corrigir, e medir outra vez.":
+      "La oscuridad engaña al ojo. Dos veces en un solo día, lo que parecía \"verde brillante\" medía <code>rgb(20, 22, 8)</code> cuando fui a muestrear el píxel. La regla que salió de ahí vale para todo el proyecto: reproducir en el navegador, medir, corregir, y medir otra vez.",
+    "A cascata comia o desenho das salas. Uma folha de estilo de componentes reescrevia largura, cor e espaçamento de salas que já tinham desenho próprio. Descobri isso a comparar valores computados, não a olhar. A correção não foi ajustar os números — foi tirar daquele arquivo toda a autoridade sobre aparência e deixá-lo só com comportamento.":
+      "<strong>La cascada se comía el diseño de las habitaciones.</strong> Una hoja de estilos de componentes reescribía ancho, color y espaciado de habitaciones que ya tenían diseño propio. Lo descubrí comparando valores computados, no mirando. La corrección no fue ajustar los números — fue quitarle a ese archivo toda autoridad sobre la apariencia y dejarlo solo con comportamiento.",
+    "Passei um dia a otimizar o pacote errado. O servidor de pré-visualização serve a pasta compilada, e eu media depois de editar a fonte sem recompilar. Estava a medir o programa anterior, e a conclusão inteira foi para o lixo.":
+      "<strong>Pasé un día optimizando el paquete equivocado.</strong> El servidor de vista previa sirve la carpeta compilada, y yo medía después de editar la fuente sin recompilar. Estaba midiendo el programa anterior, y la conclusión entera fue a la basura.",
+    "Ia cortar uma funcionalidade por um número que eu próprio inventei. Medi que uma camada nova custava 84 ms de processador por segundo e decidi removê-la. Faltava o controlo: medir o mesmo movimento de rato sem a camada. Quando o fiz, a camada custava entre zero e oito. Os oitenta eram o preço de mexer o rato. A funcionalidade ficou.":
+      "<strong>Casi elimino una funcionalidad por un número que yo mismo inventé.</strong> Medí que una capa nueva costaba 84 ms de procesador por segundo y decidí quitarla. Faltaba el control: medir el mismo movimiento de ratón <em>sin</em> la capa. Cuando lo hice, la capa costaba entre cero y ocho. Los ochenta eran el precio de mover el ratón. La funcionalidad se quedó.",
+    "O resultado desse método está nos números: o corredor passou de 132 para 58 milissegundos de processador por segundo, e o tempo de cálculo de layout caiu de uma faixa de 5 a 12 para menos de 5. E ficou provado que não há fuga de memória — 42 navegações com coleta de lixo forçada movem a contagem de nós de 1055 para 1082.":
+      "El resultado de este método está en los números: el pasillo pasó de 132 a 58 milisegundos de procesador por segundo, y el tiempo de cálculo de layout cayó de un rango de 5 a 12 a menos de 5. Y quedó probado que no hay fuga de memoria — 42 navegaciones con recolección de basura forzada mueven el conteo de nodos de 1055 a 1082.",
+    "Commits em 3 meses":
+      "Commits en 3 meses",
+    "Testes automatizados":
+      "Pruebas automatizadas",
+    "Decisões documentadas":
+      "Decisiones documentadas",
+    "Peso do primeiro paint":
+      "Peso del primer paint",
+    "O que isto provou.":
+      "Lo que esto demostró.",
+    "PHOSPHOR ainda não acabou, e o final é a única parte que continua por escrever — de propósito. Mas o que já está de pé responde à pergunta que eu queria responder: dá para construir uma coisa grande sem framework e sem deixar a qualidade escorregar?":
+      "PHOSPHOR aún no está terminado, y el final es la única parte que sigue sin escribirse — a propósito. Pero lo que ya está en pie responde a la pregunta que yo quería responder: <em>¿se puede construir algo grande sin framework y sin dejar que la calidad se resbale?</em>",
+    "Dá, com a condição de a régua ser automática. Orçamento que derruba o build, teste que corre antes do commit, e decisão que vira documento no dia em que é tomada. Sem isso, três meses de projeto pessoal viram três meses de dívida.":
+      "Se puede, con la condición de que la regla sea automática. Un presupuesto que tumba el build, una prueba que corre antes del commit, y una decisión que se vuelve documento el día en que se toma. Sin eso, tres meses de proyecto personal se vuelven tres meses de deuda.",
+    "É também o projeto onde aprendi a desconfiar de mim. Três vezes a medição contrariou o meu diagnóstico, e das três foi o diagnóstico que mudou. Isso transferiu-se inteiro para o trabalho com dados: número que não foi medido contra um controlo não é número, é opinião com casas decimais.":
+      "Es también el proyecto donde aprendí a desconfiar de mí. Tres veces la medición contradijo mi diagnóstico, y las tres veces fue el diagnóstico el que cambió. Eso se transfirió entero al trabajo con datos: un número que no se midió contra un control no es un número, es una opinión con decimales.",
+    "O escuro engana o olho. Por isso eu meço antes de ter certeza.":
+      "La oscuridad engaña al ojo.<br>Por eso mido antes de estar seguro.",
+    "Quer ver o resto?":
+      "¿Quieres ver el resto?",
+    "O PHOSPHOR corre no endereço dele, inteiro e sem explicação — é assim que ele foi feito para ser encontrado. Os outros projetos ficam na lista.":
+      "PHOSPHOR corre en su propia dirección, entero y sin explicación — así fue hecho para ser encontrado. Los demás proyectos están en la lista.",
+    "Entrar na casa":
+      "Entrar en la casa"
+
   }
 };
 
@@ -1312,6 +1864,7 @@ window.VH_I18N_ATTR = {
     'seu@email.com': 'tu@email.com',
     'Conte o contexto. Se for sobre um processo manual, me diga onde o dado nasce e quem precisa dele.':
       'Cuéntame el contexto. Si es sobre un proceso manual, dime dónde nace el dato y quién lo necesita.'
+
   }
 };
 
